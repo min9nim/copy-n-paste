@@ -1,5 +1,6 @@
 'use client'
 
+import Button from '@/components/Button'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
@@ -31,8 +32,8 @@ export default function Form() {
           setText(e.target.value)
         }}
       />
-      <button
-        className="border px-2 py-1"
+      <Button
+        label="save"
         onClick={async () => {
           setLoading(true)
           await fetch(`/api/save`, {
@@ -43,9 +44,7 @@ export default function Form() {
           setText('')
           toast.success('saved!')
         }}
-      >
-        save
-      </button>
+      />
     </div>
   )
 }
