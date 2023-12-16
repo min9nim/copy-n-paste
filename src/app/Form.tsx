@@ -32,19 +32,34 @@ export default function Form() {
           setText(e.target.value)
         }}
       />
-      <Button
-        label="save"
-        onClick={async () => {
-          setLoading(true)
-          await fetch(`/api/save`, {
-            method: 'post',
-            body: JSON.stringify({ text, userId }),
-          }).then(res => res.json())
-          setLoading(false)
-          setText('')
-          toast.success('saved!')
-        }}
-      />
+      <div className="flex flex-row gap-2">
+        <Button
+          label="Paste"
+          onClick={async () => {
+            setLoading(true)
+            await fetch(`/api/save`, {
+              method: 'post',
+              body: JSON.stringify({ text, userId }),
+            }).then(res => res.json())
+            setLoading(false)
+            setText('')
+            toast.success('saved!')
+          }}
+        />
+        <Button
+          label="Paste & Save"
+          onClick={async () => {
+            setLoading(true)
+            await fetch(`/api/save`, {
+              method: 'post',
+              body: JSON.stringify({ text, userId }),
+            }).then(res => res.json())
+            setLoading(false)
+            setText('')
+            toast.success('saved!')
+          }}
+        />
+      </div>
     </div>
   )
 }
