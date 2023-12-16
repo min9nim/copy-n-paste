@@ -14,7 +14,18 @@ export default function Form() {
           setText(e.target.value)
         }}
       />
-      <button className="border px-2 py-1">save</button>
+      <button
+        className="border px-2 py-1"
+        onClick={async () => {
+          const result = await fetch(`/api/save`, {
+            method: 'post',
+            body: JSON.stringify({ text }),
+          }).then(res => res.json())
+          console.log(result)
+        }}
+      >
+        save
+      </button>
     </div>
   )
 }
