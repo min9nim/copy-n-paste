@@ -1,16 +1,19 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 export default function Form() {
   const [text, setText] = useState<string>('')
   const [userId, setUserId] = useState<string>(
-    localStorage.getItem('userId') ?? '',
+    typeof window === 'object'
+      ? window.localStorage.getItem('userId') ?? ''
+      : '',
   )
   useEffect(() => {
     if (!userId) {
       const id = Math.random().toString(36).slice(2)
-      localStorage.setItem('userId', id)
+      window.localStorage.setItem('userId', id)
       setUserId(id)
     }
   }, [])
@@ -31,7 +34,7 @@ export default function Form() {
             method: 'post',
             body: JSON.stringify({ text, userId }),
           }).then(res => res.json())
-          console.log(result)
+          toast.success('saved!')
         }}
       >
         save
