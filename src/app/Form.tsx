@@ -1,9 +1,19 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function Form() {
   const [text, setText] = useState<string>('')
+  const [userId, setUserId] = useState<string>(
+    localStorage.getItem('userId') ?? '',
+  )
+  useEffect(() => {
+    if (!userId) {
+      const id = Math.random().toString(36).slice(2)
+      localStorage.setItem('userId', id)
+      setUserId(id)
+    }
+  }, [])
   return (
     <div className="max-w-2xl w-full">
       <textarea
@@ -19,7 +29,7 @@ export default function Form() {
         onClick={async () => {
           const result = await fetch(`/api/save`, {
             method: 'post',
-            body: JSON.stringify({ text }),
+            body: JSON.stringify({ text, userId }),
           }).then(res => res.json())
           console.log(result)
         }}
