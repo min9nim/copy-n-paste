@@ -1,3 +1,4 @@
+import { createText, listDatabases } from '@/utils'
 import { MongoClient } from 'mongodb'
 
 describe('test', () => {
@@ -23,18 +24,3 @@ describe('test', () => {
     }
   })
 })
-
-async function listDatabases(client) {
-  const databasesList = await client.db().admin().listDatabases()
-
-  console.log('Databases:')
-  databasesList.databases.forEach(db => console.log(` - ${db.name}`))
-}
-
-async function createText(client, text) {
-  const result = await client
-    .db('copy-n-paste')
-    .collection('texts')
-    .insertOne(text)
-  console.log(`New text created with the following id: ${result.insertedId}`)
-}

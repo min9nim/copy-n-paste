@@ -31,3 +31,18 @@ export function debounce(func, timeout = 300) {
     timer = setTimeout(() => func(...args), timeout)
   }
 }
+
+export async function listDatabases(client) {
+  const databasesList = await client.db().admin().listDatabases()
+
+  console.log('Databases:')
+  databasesList.databases.forEach(db => console.log(` - ${db.name}`))
+}
+
+export async function createText(client, text) {
+  const result = await client
+    .db('copy-n-paste')
+    .collection('texts')
+    .insertOne(text)
+  console.log(`New text created with the following id: ${result.insertedId}`)
+}
