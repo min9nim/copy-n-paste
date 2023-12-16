@@ -5,6 +5,7 @@ import toast from 'react-hot-toast'
 
 export default function Form() {
   const [text, setText] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
   const [userId, setUserId] = useState<string>(
     typeof window === 'object'
       ? window.localStorage.getItem('userId') ?? ''
@@ -17,6 +18,9 @@ export default function Form() {
       setUserId(id)
     }
   }, [])
+  if (loading) {
+    return <div className="animate-bounce">Saving..</div>
+  }
   return (
     <div className="max-w-2xl w-full">
       <textarea
@@ -30,10 +34,13 @@ export default function Form() {
       <button
         className="border px-2 py-1"
         onClick={async () => {
-          const result = await fetch(`/api/save`, {
+          setLoading(true)
+          await fetch(`/api/save`, {
             method: 'post',
             body: JSON.stringify({ text, userId }),
           }).then(res => res.json())
+          setLoading(false)
+          setText('')
           toast.success('saved!')
         }}
       >
