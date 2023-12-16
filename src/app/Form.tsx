@@ -5,13 +5,16 @@ import { useState } from 'react'
 export default function Form() {
   const [text, setText] = useState<string>('')
   return (
-    <textarea
-      className="p-2 bg-gray-900 max-w-2xl w-full"
-      value={text}
-      rows={5}
-      onChange={e => {
-        setText(e.target.value)
-      }}
-    />
+    <div className="max-w-2xl w-full">
+      <textarea
+        className="p-2 bg-gray-900 w-full border"
+        value={text}
+        rows={5}
+        onChange={e => {
+          setText(e.target.value)
+        }}
+      />
+      <button className="border px-2 py-1">save</button>
+    </div>
   )
 }
