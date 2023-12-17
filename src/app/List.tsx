@@ -2,20 +2,9 @@
 
 import IconCopy from '@/components/icons/IconCopy'
 import { copyToClipboard } from '@/utils'
-import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
-export default function List() {
-  const [list, setList] = useState<any[]>([])
-
-  useEffect(() => {
-    fetch('/api/list')
-      .then(res => res.json())
-      .then(list => {
-        setList(list)
-      })
-  }, [])
-
+export default function List({ list }) {
   if (list.length === 0) {
     return <div className="animate-bounce">Loading..</div>
   }
