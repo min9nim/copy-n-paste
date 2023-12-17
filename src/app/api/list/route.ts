@@ -1,3 +1,4 @@
+import { textsCollection } from '@/utils'
 import { MongoClient } from 'mongodb'
 import { NextResponse } from 'next/server'
 
@@ -9,11 +10,7 @@ export async function GET(request: Request) {
 
   try {
     await client.connect()
-    const result = await client
-      .db('copy-n-paste')
-      .collection('texts')
-      .find()
-      .sort({ createdAt: -1 })
+    const result = await textsCollection(client).find().sort({ createdAt: -1 })
 
     const list = await result.toArray()
 
