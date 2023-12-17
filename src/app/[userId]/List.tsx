@@ -46,9 +46,12 @@ export default function List({ list, loading, setList, setLoading, userId }) {
         </div>
       )}
       {list.map(item => (
-        <div className="flex flex-col items-end my-4" key={item._id}>
+        <div
+          className="flex flex-col items-end my-4 bg-gray-900 "
+          key={item._id}
+        >
           <pre
-            className="w-full bg-gray-800 py-2 px-4 cursor-pointer"
+            className="w-full py-2 px-4 cursor-pointer"
             onClick={() => {
               copyToClipboard(item.text)
               toast.success('copied')

@@ -32,7 +32,7 @@ export default function Form({ userId, setList }) {
   return (
     <div className="max-w-2xl w-full">
       <textarea
-        className={clsNms('p-2 bg-gray-800 w-full border', {
+        className={clsNms('p-2 bg-gray-900 w-full border', {
           'animate-bounce': loading,
           'bg-gray-700': loading,
         })}
