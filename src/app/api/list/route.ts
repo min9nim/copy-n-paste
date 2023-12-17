@@ -24,7 +24,6 @@ export async function GET(request: Request) {
   try {
     await client.connect()
     const count = await textsCollection(client).count()
-    console.log(22, count)
     let list = []
     if (count > 0) {
       const result = await textsCollection(client)
