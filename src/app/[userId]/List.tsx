@@ -36,7 +36,7 @@ export default function List({ list, loading, setList, setLoading, userId }) {
       toast.success('deleted')
     }
   }
-  if (loading) {
+  if (list.length === 0 && loading) {
     return <div className="animate-spin">@@</div>
   }
 
