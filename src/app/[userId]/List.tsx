@@ -46,7 +46,7 @@ export default function List({ list, loading, setList, setLoading, userId }) {
         </div>
       )}
       {list.map(item => (
-        <div className="flex flex-row items-center my-4" key={item._id}>
+        <div className="flex flex-col items-end my-4" key={item._id}>
           <pre
             className="w-full bg-gray-800 py-2 px-4 cursor-pointer"
             onClick={() => {
@@ -56,12 +56,14 @@ export default function List({ list, loading, setList, setLoading, userId }) {
           >
             {item.text}
           </pre>
-          <div>{dayjs(item.createdAt).fromNow()}</div>
-          <div
-            className="hover:scale-110 cursor-pointer"
-            onClick={() => deleteItem(item)}
-          >
-            <IconDelete size={30} />
+          <div className="flex flex-row gap-2 items-center text-gray-500 italic">
+            <div>{dayjs(item.createdAt).fromNow()}</div>
+            <div
+              className="hover:scale-110 cursor-pointer"
+              onClick={() => deleteItem(item)}
+            >
+              <IconDelete size={30} />
+            </div>
           </div>
         </div>
       ))}
