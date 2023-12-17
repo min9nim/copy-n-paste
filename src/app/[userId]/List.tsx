@@ -6,7 +6,7 @@ import { copyToClipboard } from '@/utils'
 import toast from 'react-hot-toast'
 import Swal from 'sweetalert2'
 
-export default function List({ list, loading }) {
+export default function List({ list, loading, setList, setLoading, userId }) {
   if (loading) {
     return <div className="animate-bounce">Loading..</div>
   }
@@ -23,10 +23,16 @@ export default function List({ list, loading }) {
     })
 
     if (result.isConfirmed) {
+      setLoading(true)
       await fetch('/api/delete', {
         method: 'delete',
         body: JSON.stringify({ _id: item._id }),
       })
+      const list = await fetch('/api/list?userId=' + userId).then(res =>
+        res.json(),
+      )
+      setList(list)
+      setLoading(false)
       toast.success('deleted')
     }
   }
