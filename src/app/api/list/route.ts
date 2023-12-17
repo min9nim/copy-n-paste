@@ -9,9 +9,15 @@ export async function GET(request: Request) {
 
   try {
     await client.connect()
-    const result = await client.db('copy-n-paste').collection('texts').find()
+    const result = await client
+      .db('copy-n-paste')
+      .collection('texts')
+      .find()
+      .sort({ createdAt: -1 })
 
     const list = await result.toArray()
+
+    // 콜렉션이 비워져 있을 때 예외 처리 필요
 
     return NextResponse.json(list, {
       status: 200,

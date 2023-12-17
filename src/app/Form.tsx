@@ -42,6 +42,7 @@ export default function Form() {
       <textarea
         className={clsNms('p-2 bg-gray-900 w-full border', {
           'animate-bounce': loading,
+          'bg-gray-700': loading,
         })}
         value={text}
         disabled={loading}

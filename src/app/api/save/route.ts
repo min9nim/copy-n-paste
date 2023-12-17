@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     await client.connect()
     await createText(client, {
       text,
-      createAt: Date.now(),
+      createdAt: Date.now(),
       userId,
     })
 
