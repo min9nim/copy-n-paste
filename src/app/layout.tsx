@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import SweetAlertDarkMode from './SweetAlertDarkMode'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -13,6 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html>
+      <SweetAlertDarkMode />
       <body>{children}</body>
     </html>
   )
