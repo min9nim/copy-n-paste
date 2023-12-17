@@ -9,6 +9,7 @@ export default function List({ list, loading }) {
     return <div className="animate-bounce">Loading..</div>
   }
 
+  console.log(22, list)
   return (
     <div className="max-w-2xl w-full">
       {list.length === 0 && (

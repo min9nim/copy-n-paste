@@ -1,16 +1,14 @@
 'use client'
 
 import Button from '@/components/Button'
-import useUserId from '@/hooks/useUserId'
 import { textFromClipboard } from '@/utils'
 import { clsNms } from '@madup-inc/utils'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 
-export default function Form({ setList }) {
+export default function Form({ userId, setList }) {
   const [text, setText] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
-  const userId = useUserId()
 
   const saveText = async ({ text, userId }) => {
     if (!text) {
@@ -23,7 +21,9 @@ export default function Form({ setList }) {
       body: JSON.stringify({ text, userId }),
     }).then(res => res.json())
     setText('')
-    const list = await fetch('/api/list').then(res => res.json())
+    const list = await fetch(`/api/list?userId=${userId}`).then(res =>
+      res.json(),
+    )
     setList(list)
     setLoading(false)
     toast.success('saved')
