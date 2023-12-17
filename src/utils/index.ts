@@ -51,3 +51,17 @@ export async function createText(client, text) {
 
 export const textsCollection = client =>
   client.db('copy-n-paste').collection('texts')
+
+export const removeAnimation = (dom, delay) => {
+  return new Promise(function (resolve) {
+    dom.style.transition = `transform ${delay}s ease-in-out`
+    dom.style.transform = 'scaleY(0)'
+    setTimeout(() => {
+      dom.style = ''
+      dom.classList.value =
+        'flex flex-row justify-center items-center animate-bounce p-2'
+      dom.innerHTML = 'Deleting..'
+      resolve(undefined)
+    }, delay * 1000)
+  })
+}

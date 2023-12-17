@@ -1,7 +1,7 @@
 'use client'
 
 import IconDelete from '@/components/icons/IconDelete'
-import { copyToClipboard } from '@/utils'
+import { copyToClipboard, removeAnimation } from '@/utils'
 import dayjs from 'dayjs'
 import toast from 'react-hot-toast'
 import Swal from 'sweetalert2'
@@ -9,10 +9,6 @@ import Swal from 'sweetalert2'
 dayjs.extend(require('dayjs/plugin/relativeTime'))
 
 export default function List({ list, loading, setList, setLoading, userId }) {
-  if (loading) {
-    return <div className="animate-bounce">Loading..</div>
-  }
-
   const deleteItem = async item => {
     const result = await Swal.fire({
       title: `Delete this text?`,
@@ -25,7 +21,9 @@ export default function List({ list, loading, setList, setLoading, userId }) {
     })
 
     if (result.isConfirmed) {
+      await removeAnimation(document.getElementById(item._id), 0.5)
       setLoading(true)
+
       await fetch('/api/delete', {
         method: 'delete',
         body: JSON.stringify({ _id: item._id }),
@@ -47,6 +45,7 @@ export default function List({ list, loading, setList, setLoading, userId }) {
       )}
       {list.map(item => (
         <div
+          id={item._id}
           className="flex flex-col items-end my-4 bg-gray-900 "
           key={item._id}
         >
