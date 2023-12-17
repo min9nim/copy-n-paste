@@ -35,9 +35,12 @@ export default function List({ list, loading }) {
           </div>
           <div
             className="hover:scale-110 cursor-pointer"
-            onClick={() => {
-              copyToClipboard(item.text)
-              toast.success('copied')
+            onClick={async () => {
+              await fetch('/api/delete', {
+                method: 'delete',
+                body: JSON.stringify({ _id: item._id }),
+              })
+              toast.success('deleted')
             }}
           >
             <IconDelete size={25} />
