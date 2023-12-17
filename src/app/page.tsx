@@ -15,5 +15,5 @@ export default function Home() {
 
     router.push('/' + userId)
   }, [])
-  return <main>Loading..</main>
+  return <main className="p-4">Loading..</main>
 }
