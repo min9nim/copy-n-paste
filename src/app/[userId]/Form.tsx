@@ -47,9 +47,7 @@ export default function Form({ userId, setList }) {
           className="w-full max-w-2xl text-xl"
           style={{ position: 'absolute', marginTop: '-80px' }}
         >
-          <div className="w-full flex justify-center animate-bounce">
-            Saving..
-          </div>
+          <div className="w-full flex justify-center animate-spin">@@</div>
         </div>
       )}
       <div className="flex flex-row flex-wrap justify-between">
