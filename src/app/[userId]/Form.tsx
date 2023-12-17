@@ -47,14 +47,16 @@ export default function Form({ userId, setList }) {
         }}
       />
       <div className="flex flex-row flex-wrap justify-between">
-        <Button
-          label="Paste"
-          onClick={async () => {
-            const value = await textFromClipboard()
-            setText(value)
-          }}
-        />
-        <div className="flex flex-row flex-wrap items-center gap-2 px-2">
+        <div className="mb-1">
+          <Button
+            label="Paste"
+            onClick={async () => {
+              const value = await textFromClipboard()
+              setText(value)
+            }}
+          />
+        </div>
+        <div className="flex flex-row flex-wrap items-center gap-2 px-2 mb-1">
           <span>Expires in</span>
           <Radio
             options={[
@@ -76,7 +78,7 @@ export default function Form({ userId, setList }) {
           />
         </div>
 
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-2 mb-1">
           <Button
             label="Paste & Save"
             onClick={async () => {
