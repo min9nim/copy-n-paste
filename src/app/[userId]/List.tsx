@@ -4,13 +4,13 @@ import IconCopy from '@/components/icons/IconCopy'
 import IconDelete from '@/components/icons/IconDelete'
 import { copyToClipboard } from '@/utils'
 import toast from 'react-hot-toast'
+import Swal from 'sweetalert2'
 
 export default function List({ list, loading }) {
   if (loading) {
     return <div className="animate-bounce">Loading..</div>
   }
 
-  console.log(22, list)
   return (
     <div className="max-w-2xl w-full">
       {list.length === 0 && (
@@ -36,11 +36,23 @@ export default function List({ list, loading }) {
           <div
             className="hover:scale-110 cursor-pointer"
             onClick={async () => {
-              await fetch('/api/delete', {
-                method: 'delete',
-                body: JSON.stringify({ _id: item._id }),
+              const result = await Swal.fire({
+                title: `Delete this text?`,
+                html: `<span class="text-gray-400">${item.text}</span>`,
+                // icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
               })
-              toast.success('deleted')
+
+              if (result.isConfirmed) {
+                await fetch('/api/delete', {
+                  method: 'delete',
+                  body: JSON.stringify({ _id: item._id }),
+                })
+                toast.success('deleted')
+              }
             }}
           >
             <IconDelete size={25} />
