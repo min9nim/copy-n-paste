@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     await createText(client, {
       text,
       createdAt: timestamp,
-      expire: timestamp + expire,
+      expireAt: timestamp + expire,
       userId,
     })
 
