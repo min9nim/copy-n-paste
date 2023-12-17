@@ -60,6 +60,7 @@ export default function Form({ userId, setList }) {
               const value = await textFromClipboard()
               setText(value)
             }}
+            disable={loading}
           />
         </div>
         <div className="flex flex-row flex-wrap items-center gap-2 px-2 mb-1">
@@ -81,6 +82,7 @@ export default function Form({ userId, setList }) {
             ]}
             value={expire}
             setValue={setExpire}
+            readOnly={loading}
           />
         </div>
 
@@ -92,12 +94,14 @@ export default function Form({ userId, setList }) {
               setText(value)
               await saveText({ text: value, userId, expire })
             }}
+            disable={loading}
           />
           <Button
             label="Save"
             onClick={async () => {
               await saveText({ text, userId, expire })
             }}
+            disable={loading}
           />
         </div>
       </div>

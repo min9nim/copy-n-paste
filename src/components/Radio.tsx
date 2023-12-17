@@ -1,4 +1,4 @@
-export default function Radio({ options, value, setValue }) {
+export default function Radio({ options, value, setValue, readOnly = false }) {
   return (
     <div className="flex flex-row gap-4 flex-wrap items-center">
       {options.map(option => (
@@ -9,6 +9,7 @@ export default function Radio({ options, value, setValue }) {
             value={option.value}
             checked={option.value === value}
             onChange={e => setValue(option.value)}
+            readOnly={readOnly}
           />
           <span onClick={e => setValue(option.value)}>{option.label}</span>
         </div>
