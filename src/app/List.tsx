@@ -1,7 +1,9 @@
 'use client'
 
 import IconCopy from '@/components/icons/IconCopy'
+import { copyToClipboard } from '@/utils'
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 export default function List() {
   const [list, setList] = useState<any[]>([])
@@ -26,7 +28,13 @@ export default function List() {
           key={item._id}
         >
           <div>{item.text}</div>
-          <div className="hover:scale-110 cursor-pointer">
+          <div
+            className="hover:scale-110 cursor-pointer"
+            onClick={() => {
+              copyToClipboard(item.text)
+              toast.success('copied')
+            }}
+          >
             <IconCopy size={15} />
           </div>
         </div>

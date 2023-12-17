@@ -1,3 +1,5 @@
+import toast from 'react-hot-toast'
+
 export const isBrowser = typeof window === 'object'
 export const PROD_HOST = 'copy-n-paste.vercel.app'
 export const isProd =
@@ -15,14 +17,17 @@ export const copyToClipboard = val => {
   document.body.removeChild(t)
 }
 
-export const deeplReq = (path: string, option = {}) =>
-  fetch(`https://api-free.deepl.com${path}`, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `DeepL-Auth-Key ${process.env.API_KEY}`,
-    },
-    ...option,
-  }).then(res => res.json())
+export const textFromClipboard = async () => {
+  const str = await navigator.clipboard.readText().catch(err => {
+    const msg = 'Failed to read clipboard contents: '
+    console.error(msg, err)
+  })
+  if (!str) {
+    toast.error('No text in clipboard')
+    throw Error('No text in clipboard')
+  }
+  return str.trim()
+}
 
 export function debounce(func, timeout = 300) {
   let timer

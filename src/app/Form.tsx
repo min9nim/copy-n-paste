@@ -1,6 +1,8 @@
 'use client'
 
 import Button from '@/components/Button'
+import { textFromClipboard } from '@/utils'
+import { clsNms } from '@madup-inc/utils'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
@@ -19,14 +21,30 @@ export default function Form() {
       setUserId(id)
     }
   }, [])
-  if (loading) {
-    return <div className="animate-bounce">Saving..</div>
+
+  const saveText = async ({ text, userId }) => {
+    if (!text) {
+      toast.error('No text in textarea')
+      throw Error('No text in textarea')
+    }
+    setLoading(true)
+    await fetch(`/api/save`, {
+      method: 'post',
+      body: JSON.stringify({ text, userId }),
+    }).then(res => res.json())
+    setLoading(false)
+    setText('')
+    toast.success('saved')
   }
+
   return (
     <div className="max-w-2xl w-full">
       <textarea
-        className="p-2 bg-gray-900 w-full border"
+        className={clsNms('p-2 bg-gray-900 w-full border', {
+          'animate-bounce': loading,
+        })}
         value={text}
+        disabled={loading}
         rows={5}
         onChange={e => {
           setText(e.target.value)
@@ -36,27 +54,22 @@ export default function Form() {
         <Button
           label="Paste"
           onClick={async () => {
-            setLoading(true)
-            await fetch(`/api/save`, {
-              method: 'post',
-              body: JSON.stringify({ text, userId }),
-            }).then(res => res.json())
-            setLoading(false)
-            setText('')
-            toast.success('saved!')
+            const value = await textFromClipboard()
+            setText(value)
+          }}
+        />
+        <Button
+          label="Save"
+          onClick={async () => {
+            await saveText({ text, userId })
           }}
         />
         <Button
           label="Paste & Save"
           onClick={async () => {
-            setLoading(true)
-            await fetch(`/api/save`, {
-              method: 'post',
-              body: JSON.stringify({ text, userId }),
-            }).then(res => res.json())
-            setLoading(false)
-            setText('')
-            toast.success('saved!')
+            const value = await textFromClipboard()
+            setText(value)
+            await saveText({ text: value, userId })
           }}
         />
       </div>
