@@ -2,8 +2,11 @@
 
 import IconDelete from '@/components/icons/IconDelete'
 import { copyToClipboard } from '@/utils'
+import dayjs from 'dayjs'
 import toast from 'react-hot-toast'
 import Swal from 'sweetalert2'
+
+dayjs.extend(require('dayjs/plugin/relativeTime'))
 
 export default function List({ list, loading, setList, setLoading, userId }) {
   if (loading) {
@@ -53,6 +56,7 @@ export default function List({ list, loading, setList, setLoading, userId }) {
           >
             {item.text}
           </pre>
+          <div>{dayjs(item.createdAt).fromNow()}</div>
           <div
             className="hover:scale-110 cursor-pointer"
             onClick={() => deleteItem(item)}
