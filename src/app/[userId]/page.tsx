@@ -1,4 +1,5 @@
 'use client'
+import IconLogo from '@/components/icons/IconLogo'
 import { USER_ID } from '@/constant'
 import { useEffect, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
@@ -24,7 +25,11 @@ export default function Home({ params }) {
     localStorage.setItem(USER_ID, userId)
   }, [userId])
   return (
-    <main className="flex min-h-screen flex-col items-center p-24 gap-4">
+    <main className="flex min-h-screen flex-col items-center px-24 py-4 gap-4">
+      <div className="flex gap-2 items-center w-full">
+        <IconLogo size={30} />
+        <div className="text-2xl">Copy & Paste</div>
+      </div>
       <Form userId={userId} setList={setList} />
       <List
         list={list}
