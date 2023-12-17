@@ -13,18 +13,18 @@ export default function Form({ userId, setList }) {
   const saveText = async ({ text, userId }) => {
     if (!text) {
       toast.error('No text in textarea')
-      throw Error('No text in textarea')
+      return
     }
     setLoading(true)
     await fetch(`/api/save`, {
       method: 'post',
       body: JSON.stringify({ text, userId }),
     }).then(res => res.json())
-    setText('')
     const list = await fetch(`/api/list?userId=${userId}`).then(res =>
       res.json(),
     )
     setList(list)
+    setText('')
     setLoading(false)
     toast.success('saved')
   }

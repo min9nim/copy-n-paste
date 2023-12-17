@@ -1,6 +1,5 @@
 'use client'
 
-import IconCopy from '@/components/icons/IconCopy'
 import IconDelete from '@/components/icons/IconDelete'
 import { copyToClipboard } from '@/utils'
 import toast from 'react-hot-toast'
@@ -44,7 +43,7 @@ export default function List({ list, loading, setList, setLoading, userId }) {
         </div>
       )}
       {list.map(item => (
-        <div className="flex flex-col items-end my-4" key={item._id}>
+        <div className="flex flex-row items-center my-4" key={item._id}>
           <pre
             className="w-full bg-gray-800 py-2 px-4 cursor-pointer"
             onClick={() => {
@@ -54,22 +53,11 @@ export default function List({ list, loading, setList, setLoading, userId }) {
           >
             {item.text}
           </pre>
-          <div className="flex items-center justify-between w-full">
-            <div
-              className="hover:scale-110 cursor-pointer"
-              onClick={() => deleteItem(item)}
-            >
-              <IconDelete size={30} />
-            </div>
-            <div
-              className="hover:scale-110 cursor-pointer"
-              onClick={() => {
-                copyToClipboard(item.text)
-                toast.success('copied')
-              }}
-            >
-              <IconCopy size={15} />
-            </div>
+          <div
+            className="hover:scale-110 cursor-pointer"
+            onClick={() => deleteItem(item)}
+          >
+            <IconDelete size={30} />
           </div>
         </div>
       ))}
