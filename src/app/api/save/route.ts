@@ -19,10 +19,11 @@ export async function POST(request: Request) {
       )
     }
     await client.connect()
+    const timestamp = Date.now()
     await createText(client, {
       text,
-      createdAt: Date.now(),
-      expire,
+      createdAt: timestamp,
+      expire: timestamp + expire,
       userId,
     })
 
