@@ -23,13 +23,15 @@ export async function GET(request: Request) {
 
   try {
     await client.connect()
-    const result = await textsCollection(client)
-      .find({ userId })
-      .sort({ createdAt: -1 })
-
-    const list = await result.toArray()
-
-    // 콜렉션이 비워져 있을 때 예외 처리 필요
+    const count = await textsCollection(client).count()
+    console.log(22, count)
+    let list = []
+    if (count > 0) {
+      const result = await textsCollection(client)
+        .find({ userId })
+        .sort({ createdAt: -1 })
+      list = await result.toArray()
+    }
 
     return NextResponse.json(list, {
       status: 200,

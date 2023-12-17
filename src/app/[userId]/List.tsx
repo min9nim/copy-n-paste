@@ -4,13 +4,18 @@ import IconCopy from '@/components/icons/IconCopy'
 import { copyToClipboard } from '@/utils'
 import toast from 'react-hot-toast'
 
-export default function List({ list }) {
-  if (list.length === 0) {
+export default function List({ list, loading }) {
+  if (loading) {
     return <div className="animate-bounce">Loading..</div>
   }
 
   return (
     <div className="max-w-2xl w-full">
+      {list.length === 0 && (
+        <div className="flex flex-row justify-center items-center  my-2 py-2 px-4">
+          There is no data
+        </div>
+      )}
       {list.map(item => (
         <div
           className="flex flex-row justify-between items-center bg-gray-800 my-2 py-2 px-4"
