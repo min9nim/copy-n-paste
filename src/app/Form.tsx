@@ -6,7 +6,7 @@ import { clsNms } from '@madup-inc/utils'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
-export default function Form() {
+export default function Form({ setList }) {
   const [text, setText] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const [userId, setUserId] = useState<string>(
@@ -32,8 +32,10 @@ export default function Form() {
       method: 'post',
       body: JSON.stringify({ text, userId }),
     }).then(res => res.json())
-    setLoading(false)
     setText('')
+    const list = await fetch('/api/list').then(res => res.json())
+    setList(list)
+    setLoading(false)
     toast.success('saved')
   }
 
