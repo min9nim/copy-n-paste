@@ -17,3 +17,10 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+::-webkit-scrollbar {
+  height: 3px;
+}
+::-webkit-scrollbar-thumb {
+  background: #444;
+}
