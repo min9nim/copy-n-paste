@@ -1,26 +1,16 @@
 'use client'
 
 import Button from '@/components/Button'
+import useUserId from '@/hooks/useUserId'
 import { textFromClipboard } from '@/utils'
 import { clsNms } from '@madup-inc/utils'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
 
 export default function Form({ setList }) {
   const [text, setText] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
-  const [userId, setUserId] = useState<string>(
-    typeof window === 'object'
-      ? window.localStorage.getItem('userId') ?? ''
-      : '',
-  )
-  useEffect(() => {
-    if (!userId) {
-      const id = Math.random().toString(36).slice(2)
-      window.localStorage.setItem('userId', id)
-      setUserId(id)
-    }
-  }, [])
+  const userId = useUserId()
 
   const saveText = async ({ text, userId }) => {
     if (!text) {

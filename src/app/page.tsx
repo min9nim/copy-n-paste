@@ -1,25 +1,19 @@
 'use client'
-import { useEffect, useState } from 'react'
-import { Toaster } from 'react-hot-toast'
-import Form from './Form'
 
-import List from './List'
+import { USER_ID } from '@/constant'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function Home() {
-  const [list, setList] = useState<any[]>([])
+  const router = useRouter()
 
   useEffect(() => {
-    fetch('/api/list')
-      .then(res => res.json())
-      .then(list => {
-        setList(list)
-      })
+    let userId = localStorage.getItem(USER_ID)
+    if (!userId) {
+      userId = Math.random().toString(36).slice(2)
+    }
+
+    router.push('/' + userId)
   }, [])
-  return (
-    <main className="flex min-h-screen flex-col items-center p-24 gap-4">
-      <Form setList={setList} />
-      <List list={list} />
-      <Toaster />
-    </main>
-  )
+  return <main>Loading..</main>
 }

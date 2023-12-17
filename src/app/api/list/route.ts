@@ -1,8 +1,21 @@
+import { USER_ID } from '@/constant'
 import { textsCollection } from '@/utils'
 import { MongoClient } from 'mongodb'
 import { NextResponse } from 'next/server'
 
 export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url)
+  const userId = searchParams.get(USER_ID)
+
+  if (!userId) {
+    return NextResponse.json(
+      { message: '`userId` is required' },
+      {
+        status: 400,
+      },
+    )
+  }
+
   if (!process.env.MONGODB_URI) {
     throw Error('MONGODB_URI is undefined')
   }
@@ -10,7 +23,9 @@ export async function GET(request: Request) {
 
   try {
     await client.connect()
-    const result = await textsCollection(client).find().sort({ createdAt: -1 })
+    const result = await textsCollection(client)
+      .find({ userId })
+      .sort({ createdAt: -1 })
 
     const list = await result.toArray()
 
