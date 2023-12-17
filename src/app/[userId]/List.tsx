@@ -42,11 +42,6 @@ export default function List({ list, loading, setList, setLoading, userId }) {
 
   return (
     <div className="max-w-2xl w-full">
-      {list.length === 0 && (
-        <div className="flex flex-row justify-center items-center  my-2 py-2 px-4">
-          There is no data
-        </div>
-      )}
       {list.map(item => (
         <div
           id={item._id}
