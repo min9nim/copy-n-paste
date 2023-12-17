@@ -59,8 +59,8 @@ export const removeAnimation = (dom, delay) => {
     setTimeout(() => {
       dom.style = ''
       dom.classList.value =
-        'flex flex-row justify-center items-center animate-bounce p-2'
-      dom.innerHTML = 'Deleting..'
+        'flex flex-row justify-center items-center animate-spin p-2'
+      dom.innerHTML = '@@'
       resolve(undefined)
     }, delay * 1000)
   })
