@@ -1,6 +1,7 @@
 'use client'
 
 import IconCopy from '@/components/icons/IconCopy'
+import IconDelete from '@/components/icons/IconDelete'
 import { copyToClipboard } from '@/utils'
 import toast from 'react-hot-toast'
 
@@ -31,6 +32,15 @@ export default function List({ list, loading }) {
             }}
           >
             <IconCopy size={15} />
+          </div>
+          <div
+            className="hover:scale-110 cursor-pointer"
+            onClick={() => {
+              copyToClipboard(item.text)
+              toast.success('copied')
+            }}
+          >
+            <IconDelete size={25} />
           </div>
         </div>
       ))}
