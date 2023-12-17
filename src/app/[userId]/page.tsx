@@ -1,4 +1,5 @@
 'use client'
+import { USER_ID } from '@/constant'
 import { useEffect, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
 import Form from './Form'
@@ -18,6 +19,10 @@ export default function Home({ params }) {
         setLoading(false)
       })
   }, [])
+
+  useEffect(() => {
+    localStorage.setItem(USER_ID, userId)
+  }, [userId])
   return (
     <main className="flex min-h-screen flex-col items-center p-24 gap-4">
       <Form userId={userId} setList={setList} />
