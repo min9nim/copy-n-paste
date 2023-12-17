@@ -4,7 +4,6 @@ import Button from '@/components/Button'
 import Radio from '@/components/Radio'
 import { ONE_DAY } from '@/constant'
 import { textFromClipboard } from '@/utils'
-import { clsNms } from '@madup-inc/utils'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 
@@ -35,10 +34,7 @@ export default function Form({ userId, setList }) {
   return (
     <div className="max-w-2xl w-full">
       <textarea
-        className={clsNms('p-2 bg-gray-900 w-full border', {
-          'animate-bounce': loading,
-          'bg-gray-700': loading,
-        })}
+        className="p-2 bg-gray-900 w-full border"
         value={text}
         disabled={loading}
         rows={5}
@@ -46,6 +42,16 @@ export default function Form({ userId, setList }) {
           setText(e.target.value)
         }}
       />
+      {loading && (
+        <div
+          className="w-full max-w-2xl text-xl"
+          style={{ position: 'absolute', marginTop: '-80px' }}
+        >
+          <div className="w-full flex justify-center animate-bounce">
+            Saving..
+          </div>
+        </div>
+      )}
       <div className="flex flex-row flex-wrap justify-between">
         <div className="mb-1">
           <Button
