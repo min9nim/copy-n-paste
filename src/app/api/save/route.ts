@@ -9,7 +9,7 @@ export async function POST(request: Request) {
   const client = new MongoClient(process.env.MONGODB_URI)
 
   try {
-    const { text, userId } = await request.json()
+    const { text, userId, expire } = await request.json()
     if (!text) {
       return NextResponse.json(
         { message: 'Invalid text' },
@@ -22,6 +22,7 @@ export async function POST(request: Request) {
     await createText(client, {
       text,
       createdAt: Date.now(),
+      expire,
       userId,
     })
 

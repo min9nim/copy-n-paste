@@ -11,9 +11,9 @@ import toast from 'react-hot-toast'
 export default function Form({ userId, setList }) {
   const [text, setText] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
-  const [expire, setExpire] = useState<number>(0)
+  const [expire, setExpire] = useState<number>(ONE_DAY * 31)
 
-  const saveText = async ({ text, userId }) => {
+  const saveText = async ({ text, userId, expire }) => {
     if (!text) {
       toast.error('No text in textarea')
       return
@@ -21,7 +21,7 @@ export default function Form({ userId, setList }) {
     setLoading(true)
     await fetch(`/api/save`, {
       method: 'post',
-      body: JSON.stringify({ text, userId }),
+      body: JSON.stringify({ text, userId, expire }),
     }).then(res => res.json())
     const list = await fetch(`/api/list?userId=${userId}`).then(res =>
       res.json(),
@@ -61,7 +61,7 @@ export default function Form({ userId, setList }) {
             onClick={async () => {
               const value = await textFromClipboard()
               setText(value)
-              await saveText({ text: value, userId })
+              await saveText({ text: value, userId, expire })
             }}
           />
         </div>
@@ -90,7 +90,7 @@ export default function Form({ userId, setList }) {
         <Button
           label="Save"
           onClick={async () => {
-            await saveText({ text, userId })
+            await saveText({ text, userId, expire })
           }}
         />
       </div>
