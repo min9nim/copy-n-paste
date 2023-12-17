@@ -16,7 +16,7 @@ export default function List({ list }) {
           className="flex flex-row justify-between bg-gray-800 my-2 py-2 px-4"
           key={item._id}
         >
-          <div>{item.text}</div>
+          <pre>{item.text}</pre>
           <div
             className="hover:scale-110 cursor-pointer"
             onClick={() => {
