@@ -26,6 +26,7 @@ export async function GET(request: Request) {
     const count = await textsCollection(client).count()
     let list = []
     if (count > 0) {
+      await textsCollection(client).deleteMany({ expire: { $lt: Date.now() } })
       const result = await textsCollection(client)
         .find({ userId })
         .sort({ createdAt: -1 })
