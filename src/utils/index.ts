@@ -45,9 +45,9 @@ export async function listDatabases(client) {
 }
 
 export async function createText(client, text) {
-  const result = await client
-    .db('copy-n-paste')
-    .collection('texts')
-    .insertOne(text)
+  const result = await textsCollection(client).insertOne(text)
   console.log(`New text created with the following id: ${result.insertedId}`)
 }
+
+export const textsCollection = client =>
+  client.db('copy-n-paste').collection('texts')
