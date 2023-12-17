@@ -51,7 +51,7 @@ export default function List({ list, loading, setList, setLoading, userId }) {
           key={item._id}
         >
           <pre
-            className="w-full py-2 px-4 cursor-pointer"
+            className="w-full py-2 px-4 cursor-pointer hover:italic"
             onClick={() => {
               copyToClipboard(item.text)
               toast.success('copied')
@@ -59,13 +59,16 @@ export default function List({ list, loading, setList, setLoading, userId }) {
           >
             {item.text}
           </pre>
-          <div className="flex flex-row gap-2 items-center text-gray-500 italic">
-            <div>{dayjs(item.createdAt).fromNow()}</div>
-            <div
-              className="hover:scale-110 cursor-pointer"
-              onClick={() => deleteItem(item)}
-            >
-              <IconDelete size={30} />
+          <div className="flex flex-row gap-2 justify-between items-center text-gray-500 italic w-full px-2 text-sm">
+            <div>expire in {dayjs(item.expireAt).format('YYYY.MM.DD')}</div>
+            <div className="flex flex-row gap-2 items-center text-gray-500 italic">
+              <div>{dayjs(item.createdAt).fromNow()}</div>
+              <div
+                className="hover:scale-110 cursor-pointer"
+                onClick={() => deleteItem(item)}
+              >
+                <IconDelete size={30} />
+              </div>
             </div>
           </div>
         </div>
