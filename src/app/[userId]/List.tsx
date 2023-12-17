@@ -51,7 +51,7 @@ export default function List({ list, loading, setList, setLoading, userId }) {
           key={item._id}
         >
           <pre
-            className="w-full py-2 px-4 cursor-pointer hover:italic"
+            className="w-full py-2 px-4 cursor-pointer hover:italic break-all word-wrap"
             onClick={() => {
               copyToClipboard(item.text)
               toast.success('copied')

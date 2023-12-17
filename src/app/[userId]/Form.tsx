@@ -46,25 +46,14 @@ export default function Form({ userId, setList }) {
           setText(e.target.value)
         }}
       />
-      <div className="flex flex-row justify-between">
-        <div className="flex flex-row gap-2">
-          <Button
-            label="Paste"
-            onClick={async () => {
-              const value = await textFromClipboard()
-              setText(value)
-            }}
-          />
-
-          <Button
-            label="Paste & Save"
-            onClick={async () => {
-              const value = await textFromClipboard()
-              setText(value)
-              await saveText({ text: value, userId, expire })
-            }}
-          />
-        </div>
+      <div className="flex flex-row flex-wrap justify-between">
+        <Button
+          label="Paste"
+          onClick={async () => {
+            const value = await textFromClipboard()
+            setText(value)
+          }}
+        />
         <div className="flex flex-row flex-wrap items-center gap-2 px-2">
           <span>Expires in</span>
           <Radio
@@ -87,12 +76,22 @@ export default function Form({ userId, setList }) {
           />
         </div>
 
-        <Button
-          label="Save"
-          onClick={async () => {
-            await saveText({ text, userId, expire })
-          }}
-        />
+        <div className="flex flex-row gap-2">
+          <Button
+            label="Paste & Save"
+            onClick={async () => {
+              const value = await textFromClipboard()
+              setText(value)
+              await saveText({ text: value, userId, expire })
+            }}
+          />
+          <Button
+            label="Save"
+            onClick={async () => {
+              await saveText({ text, userId, expire })
+            }}
+          />
+        </div>
       </div>
     </div>
   )
