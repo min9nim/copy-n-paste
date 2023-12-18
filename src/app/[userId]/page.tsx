@@ -30,14 +30,19 @@ export default function Home({ params }) {
     localStorage.setItem(USER_ID, userId)
   }, [userId])
   return (
-    <main className="flex min-h-screen flex-col items-center px-2 py-4 gap-4">
-      <div
-        className="flex items-center justify-between w-full max-w-2xl"
-        style={{ marginLeft: -20 }}
-      >
-        <div className="flex items-center max-w-2xl">
+    <main className="flex min-h-screen flex-col items-center px-2 py-4 gap-2">
+      <div className="flex items-center justify-between w-full max-w-2xl">
+        <div
+          className="flex items-center max-w-2xl"
+          style={{ marginLeft: -10 }}
+        >
           <IconLogo size={30} />
-          <div className="text-2xl">Copy & Paste</div>
+          <div
+            className="text-2xl font-bold"
+            style={{ marginBottom: 2, marginLeft: -3 }}
+          >
+            Copy & Paste
+          </div>
         </div>
         <div
           className="text-gray-400 cursor-pointer hover:italic"
@@ -50,6 +55,7 @@ export default function Home({ params }) {
         </div>
       </div>
       <Form userId={userId} setList={setList} />
+      <hr className="h-4" />
       <List
         list={list}
         setList={setList}
@@ -57,6 +63,7 @@ export default function Home({ params }) {
         setLoading={setLoading}
         userId={userId}
       />
+
       <Toaster />
     </main>
   )
