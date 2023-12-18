@@ -75,12 +75,12 @@ export default function List({ list, loading, setList, setLoading, userId }) {
           key={item._id}
         >
           {pre ? (
-            <pre className="w-full py-2 px-4 break-all word-wrap overflow-auto">
+            <pre className="w-full p-2 break-all word-wrap overflow-auto">
               {item.text}
             </pre>
           ) : (
             <div
-              className="w-full py-2 px-4 break-all word-wrap"
+              className="w-full p-2 break-all word-wrap"
               dangerouslySetInnerHTML={{
                 __html: enableUrl(item.text).replaceAll('\n', '<br/>'),
               }}
