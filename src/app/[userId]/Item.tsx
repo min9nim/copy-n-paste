@@ -1,13 +1,11 @@
 'use client'
 
-import IconCopy from '@/components/icons/IconCopy'
-import IconDelete from '@/components/icons/IconDelete'
-import { clsNms, copyToClipboard, enableUrl } from '@/utils'
-import dayjs from 'dayjs'
+import { clsNms, enableUrl } from '@/utils'
 import { useParams } from 'next/navigation'
 import { useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import Swal from 'sweetalert2'
+import ItemFooter from './ItemFooter'
 
 export default function Item({ item, pre, setList }) {
   const userId = useParams().userId
@@ -76,44 +74,7 @@ export default function Item({ item, pre, setList }) {
           }}
         />
       )}
-      <div className="flex flex-row gap-2 justify-between items-center text-gray-500 italic w-full px-4 text-sm">
-        <div className="flex flex-row items-center text-gray-500 italic">
-          <div
-            className={`mr-2 ${
-              loading ? 'cursor-not-allowed' : 'hover:scale-110 cursor-pointer'
-            }`}
-            onClick={() => {
-              copyToClipboard(item.text)
-              toast.success('copied')
-            }}
-          >
-            <IconCopy size={18} />
-          </div>
-          <div>expires in {dayjs(item.expireAt).format('YYYY.MM.DD')}</div>
-          <div
-            className={
-              loading ? 'cursor-not-allowed' : 'hover:scale-110 cursor-pointer'
-            }
-            onClick={() => deleteItem(item)}
-          >
-            <IconDelete size={35} />
-          </div>
-        </div>
-        <div className="flex flex-row gap-2 items-center text-gray-500 italic">
-          <div>{dayjs(item.createdAt).fromNow()}</div>
-          <div
-            className={
-              loading ? 'cursor-not-allowed' : 'hover:scale-110 cursor-pointer'
-            }
-            onClick={() => {
-              copyToClipboard(item.text)
-              toast.success('copied')
-            }}
-          >
-            <IconCopy size={18} />
-          </div>
-        </div>
-      </div>
+      <ItemFooter item={item} deleteItem={deleteItem} loading={loading} />
     </div>
   )
 }
