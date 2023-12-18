@@ -42,7 +42,7 @@ export default function Home({ params }) {
             toast.success('copied')
           }}
         >
-          {userId}
+          {decodeURIComponent(userId)}
         </div>
       </div>
       <Form userId={userId} setList={setList} />
