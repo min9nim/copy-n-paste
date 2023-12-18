@@ -20,7 +20,7 @@ export default function Form({ userId, setList }) {
     setLoading(true)
     await fetch(`/api/save`, {
       method: 'post',
-      body: JSON.stringify({ text, userId, expire }),
+      body: JSON.stringify({ text: text.trim(), userId, expire }),
     }).then(res => res.json())
     const list = await fetch(`/api/list?userId=${userId}`).then(res =>
       res.json(),
