@@ -3,15 +3,13 @@
 import Button from '@/components/Button'
 import Radio from '@/components/Radio'
 import { ONE_DAY } from '@/constant'
+import useIsClient from '@/hooks/useIsClient'
 import { clsNms, textFromClipboard } from '@/utils'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
 
 export default function Form({ userId, setList }) {
-  const [isClient, setIsClient] = useState(false)
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
+  const isClient = useIsClient()
   const [text, setText] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const [expire, setExpire] = useState<number>(ONE_DAY * 31)
