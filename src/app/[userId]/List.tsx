@@ -3,12 +3,14 @@
 import IconDelete from '@/components/icons/IconDelete'
 import { copyToClipboard, removeAnimation } from '@/utils'
 import dayjs from 'dayjs'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
 import Swal from 'sweetalert2'
 
 dayjs.extend(require('dayjs/plugin/relativeTime'))
 
 export default function List({ list, loading, setList, setLoading, userId }) {
+  const [pre, setPre] = useState<boolean>(false)
   const deleteItem = async item => {
     const result = await Swal.fire({
       title: `Delete this text?`,
@@ -48,15 +50,26 @@ export default function List({ list, loading, setList, setLoading, userId }) {
           className="flex flex-col items-end my-4 bg-gray-900 "
           key={item._id}
         >
-          <pre
-            className="w-full py-2 px-4 cursor-pointer hover:italic break-all word-wrap overflow-auto"
-            onClick={() => {
-              copyToClipboard(item.text)
-              toast.success('copied')
-            }}
-          >
-            {item.text}
-          </pre>
+          {pre ? (
+            <pre
+              className="w-full py-2 px-4 cursor-pointer hover:italic break-all word-wrap overflow-auto"
+              onClick={() => {
+                copyToClipboard(item.text)
+                toast.success('copied')
+              }}
+            >
+              {item.text}
+            </pre>
+          ) : (
+            <div
+              className="w-full py-2 px-4 cursor-pointer hover:italic break-all word-wrap"
+              dangerouslySetInnerHTML={{
+                __html: item.text
+                  .replaceAll('\n', '<br/>')
+                  .replaceAll(' ', '&nbsp;'),
+              }}
+            />
+          )}
           <div className="flex flex-row gap-2 justify-between items-center text-gray-500 italic w-full px-2 text-sm">
             <div>expire in {dayjs(item.expireAt).format('YYYY.MM.DD')}</div>
             <div className="flex flex-row gap-2 items-center text-gray-500 italic">
