@@ -26,7 +26,10 @@ export default function Home({ params }) {
   }, [userId])
   return (
     <main className="flex min-h-screen flex-col items-center px-2 py-4 gap-4">
-      <div className="flex gap-2 items-center w-full max-w-2xl">
+      <div
+        className="flex items-center w-full max-w-2xl"
+        style={{ marginLeft: -20 }}
+      >
         <IconLogo size={30} />
         <div className="text-2xl">Copy & Paste</div>
       </div>
