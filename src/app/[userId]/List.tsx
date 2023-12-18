@@ -15,7 +15,11 @@ export default function List({ list, loading, setList, setLoading, userId }) {
   const deleteItem = async item => {
     const result = await Swal.fire({
       title: `Delete this text?`,
-      html: `<span class="text-gray-400">${item.text}</span>`,
+      html: `<span class="text-gray-400">${
+        item.text.length > 50
+          ? item.text.slice(20) + ' ... ' + item.text.slice(-20)
+          : item.text
+      }</span>`,
       // icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -86,6 +90,10 @@ export default function List({ list, loading, setList, setLoading, userId }) {
                 __html: item.text
                   .replaceAll('\n', '<br/>')
                   .replaceAll(' ', '&nbsp;'),
+              }}
+              onClick={() => {
+                copyToClipboard(item.text)
+                toast.success('copied')
               }}
             />
           )}
