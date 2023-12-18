@@ -13,6 +13,10 @@ export default function Home({ params }) {
   const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
+    fetch('/api/delete-expired', { method: 'delete' })
+      .then(res => res.json())
+      .then(() => console.info('Expired items deleted'))
+
     setLoading(true)
     fetch('/api/list?userId=' + userId)
       .then(res => res.json())
