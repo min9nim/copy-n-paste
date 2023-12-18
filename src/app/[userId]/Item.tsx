@@ -63,12 +63,12 @@ export default function Item({ item, pre, setList }) {
         </div>
       )}
       {pre ? (
-        <pre className="w-full py-2 px-4 break-all word-wrap overflow-auto">
+        <pre className="w-full py-3 px-3 break-all word-wrap overflow-auto">
           {item.text}
         </pre>
       ) : (
         <div
-          className="w-full py-2 px-4 break-all word-wrap"
+          className="w-full py-3 px-3 break-all word-wrap"
           dangerouslySetInnerHTML={{
             __html: enableUrl(item.text).replaceAll('\n', '<br/>'),
           }}

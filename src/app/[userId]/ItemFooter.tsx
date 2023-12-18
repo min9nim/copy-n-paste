@@ -11,7 +11,7 @@ export default function ItemFooter({ loading, item, deleteItem }) {
   const isClient = useIsClient()
   return (
     <div
-      className={`flex flex-row gap-2 justify-between items-center italic w-full px-4 text-sm ${
+      className={`flex flex-row gap-2 justify-between items-center italic w-full px-3 text-sm ${
         loading ? 'text-gray-700' : 'text-gray-500'
       }`}
     >
