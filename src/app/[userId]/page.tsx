@@ -1,8 +1,9 @@
 'use client'
 import IconLogo from '@/components/icons/IconLogo'
 import { USER_ID } from '@/constant'
+import { copyToClipboard } from '@/utils'
 import { useEffect, useState } from 'react'
-import { Toaster } from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 import Form from './Form'
 import List from './List'
 
@@ -30,8 +31,19 @@ export default function Home({ params }) {
         className="flex items-center w-full max-w-2xl"
         style={{ marginLeft: -20 }}
       >
-        <IconLogo size={30} />
-        <div className="text-2xl">Copy & Paste</div>
+        <div className="flex items-center w-full max-w-2xl">
+          <IconLogo size={30} />
+          <div className="text-2xl">Copy & Paste</div>
+        </div>
+        <div
+          className="text-gray-400 cursor-pointer hover:italic"
+          onClick={() => {
+            copyToClipboard('https://mycnp.vercel.app/' + userId)
+            toast.success('copied')
+          }}
+        >
+          {userId}
+        </div>
       </div>
       <Form userId={userId} setList={setList} />
       <List
