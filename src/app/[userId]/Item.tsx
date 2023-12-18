@@ -2,10 +2,14 @@ import IconCopy from '@/components/icons/IconCopy'
 import IconDelete from '@/components/icons/IconDelete'
 import { copyToClipboard, enableUrl, removeAnimation } from '@/utils'
 import dayjs from 'dayjs'
+import { usePathname } from 'next/navigation'
 import toast from 'react-hot-toast'
 import Swal from 'sweetalert2'
 
-export default function Item({ item, pre, setList, userId }) {
+export default function Item({ item, pre, setList }) {
+  const pathname = usePathname()
+  const userId = pathname.split('/')[1]
+
   const deleteItem = async item => {
     const result = await Swal.fire({
       title: `Delete this text?`,

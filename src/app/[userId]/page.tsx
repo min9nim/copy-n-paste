@@ -60,7 +60,7 @@ export default function Home({ params }) {
       {list.length === 0 && loading ? (
         <div className="animate-spin">@@</div>
       ) : (
-        <List list={list} setList={setList} userId={userId} />
+        <List list={list} setList={setList} />
       )}
       <Toaster />
     </main>

@@ -7,7 +7,7 @@ import Item from './Item'
 
 dayjs.extend(require('dayjs/plugin/relativeTime'))
 
-export default function List({ list, setList, userId }) {
+export default function List({ list, setList }) {
   const [pre, setPre] = useState<boolean>(false)
 
   return (
@@ -31,7 +31,7 @@ export default function List({ list, setList, userId }) {
         </span>
       </div>
       {list.map(item => (
-        <Item item={item} pre={pre} setList={setList} userId={userId} />
+        <Item key={item._id} item={item} pre={pre} setList={setList} />
       ))}
     </div>
   )
