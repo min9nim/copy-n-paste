@@ -57,10 +57,10 @@ export const removeAnimation = (dom, delay) => {
     dom.style.transition = `transform ${delay}s ease-in-out`
     dom.style.transform = 'scaleY(0)'
     setTimeout(() => {
-      dom.style = ''
-      dom.classList.value =
-        'flex flex-row justify-center items-center animate-spin p-2'
-      dom.innerHTML = '@@'
+      // dom.style = ''
+      // dom.classList.value =
+      //   'flex flex-row justify-center items-center animate-spin p-2'
+      // dom.innerHTML = '@@'
       resolve(undefined)
     }, delay * 1000)
   })

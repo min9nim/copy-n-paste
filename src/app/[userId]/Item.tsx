@@ -1,13 +1,17 @@
+'use client'
+
 import IconCopy from '@/components/icons/IconCopy'
 import IconDelete from '@/components/icons/IconDelete'
 import { copyToClipboard, enableUrl, removeAnimation } from '@/utils'
 import dayjs from 'dayjs'
 import { useParams } from 'next/navigation'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
 import Swal from 'sweetalert2'
 
 export default function Item({ item, pre, setList }) {
   const userId = useParams().userId
+  const [loading, setLoading] = useState<boolean>(false)
 
   const deleteItem = async item => {
     const result = await Swal.fire({
@@ -26,6 +30,7 @@ export default function Item({ item, pre, setList }) {
 
     if (result.isConfirmed) {
       await removeAnimation(document.getElementById(item._id), 0.5)
+      setLoading(true)
       await fetch('/api/delete', {
         method: 'delete',
         body: JSON.stringify({ _id: item._id }),
@@ -34,9 +39,19 @@ export default function Item({ item, pre, setList }) {
         res.json(),
       )
       setList(list)
+      setLoading(false)
       toast.success('deleted')
     }
   }
+
+  if (loading) {
+    return (
+      <div className="flex flex-row justify-center items-center animate-spin p-2">
+        @@
+      </div>
+    )
+  }
+
   return (
     <div
       id={item._id}
