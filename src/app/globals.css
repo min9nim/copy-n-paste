@@ -18,6 +18,10 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+a {
+  text-decoration: underline;
+}
+
 ::-webkit-scrollbar {
   height: 3px;
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import IconDelete from '@/components/icons/IconDelete'
-import { copyToClipboard, removeAnimation } from '@/utils'
+import { copyToClipboard, enableUrl, removeAnimation } from '@/utils'
 import dayjs from 'dayjs'
 import { not } from 'ramda'
 import { useState } from 'react'
@@ -87,9 +87,9 @@ export default function List({ list, loading, setList, setLoading, userId }) {
             <div
               className="w-full py-2 px-4 cursor-pointer hover:italic break-all word-wrap"
               dangerouslySetInnerHTML={{
-                __html: item.text
-                  .replaceAll('\n', '<br/>')
-                  .replaceAll(' ', '&nbsp;'),
+                __html: enableUrl(
+                  item.text.replaceAll('\n', '<br/>').replaceAll(' ', '&nbsp;'),
+                ),
               }}
               onClick={() => {
                 copyToClipboard(item.text)
