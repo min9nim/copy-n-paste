@@ -38,7 +38,7 @@ export default function Form({ userId, setList }) {
   return (
     <div className="max-w-2xl w-full">
       <textarea
-        className="p-2 bg-gray-900 w-full border"
+        className="py-2 px-4 bg-gray-900 w-full border"
         value={text}
         disabled={loading}
         rows={5}

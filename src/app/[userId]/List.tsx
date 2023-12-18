@@ -75,18 +75,18 @@ export default function List({ list, loading, setList, setLoading, userId }) {
           key={item._id}
         >
           {pre ? (
-            <pre className="w-full p-2 break-all word-wrap overflow-auto">
+            <pre className="w-full py-2 px-4 break-all word-wrap overflow-auto">
               {item.text}
             </pre>
           ) : (
             <div
-              className="w-full p-2 break-all word-wrap"
+              className="w-full py-2 px-4 break-all word-wrap"
               dangerouslySetInnerHTML={{
                 __html: enableUrl(item.text).replaceAll('\n', '<br/>'),
               }}
             />
           )}
-          <div className="flex flex-row gap-2 justify-between items-center text-gray-500 italic w-full px-2 text-sm">
+          <div className="flex flex-row gap-2 justify-between items-center text-gray-500 italic w-full px-4 text-sm">
             <div className="flex flex-row items-center text-gray-500 italic">
               <div
                 className="hover:scale-110 cursor-pointer mr-2"
