@@ -3,14 +3,16 @@
 import IconCopy from '@/components/icons/IconCopy'
 import IconDelete from '@/components/icons/IconDelete'
 import { copyToClipboard, enableUrl } from '@/utils'
+import { clsNms } from '@madup-inc/utils'
 import dayjs from 'dayjs'
 import { useParams } from 'next/navigation'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import Swal from 'sweetalert2'
 
 export default function Item({ item, pre, setList }) {
   const userId = useParams().userId
+  const divRef = useRef<HTMLDivElement>(null)
   const [loading, setLoading] = useState<boolean>(false)
 
   const deleteItem = async item => {
@@ -43,20 +45,26 @@ export default function Item({ item, pre, setList }) {
     }
   }
 
-  if (loading) {
-    return (
-      <div className="flex flex-row justify-center items-center animate-spin p-2">
-        @@
-      </div>
-    )
-  }
-
   return (
     <div
-      id={item._id}
-      className="flex flex-col items-end my-4 bg-gray-900 "
+      ref={divRef}
+      className={clsNms('flex flex-col items-end my-4 bg-gray-900', {
+        'text-gray-700': loading,
+      })}
       key={item._id}
     >
+      {loading && (
+        <div
+          className="flex flex-row justify-center items-center animate-spin w-full text-white"
+          style={{
+            position: 'relative',
+            top: (divRef.current?.clientHeight ?? 0) / 2,
+            height: 0,
+          }}
+        >
+          @@
+        </div>
+      )}
       {pre ? (
         <pre className="w-full py-2 px-4 break-all word-wrap overflow-auto">
           {item.text}
