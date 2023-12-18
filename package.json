@@ -13,6 +13,7 @@
     "dayjs": "^1.11.10",
     "mongodb": "^6.3.0",
     "next": "14.0.4",
+    "ramda": "^0.29.1",
     "react": "^18",
     "react-dom": "^18",
     "react-hot-toast": "^2.4.1",
