@@ -87,9 +87,7 @@ export default function List({ list, loading, setList, setLoading, userId }) {
             <div
               className="w-full py-2 px-4 cursor-pointer hover:italic break-all word-wrap"
               dangerouslySetInnerHTML={{
-                __html: enableUrl(
-                  item.text.replaceAll('\n', '<br/>').replaceAll(' ', '&nbsp;'),
-                ),
+                __html: enableUrl(item.text).replaceAll('\n', '<br/>'),
               }}
               onClick={() => {
                 copyToClipboard(item.text)
