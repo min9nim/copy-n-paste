@@ -3,6 +3,7 @@
 import IconDelete from '@/components/icons/IconDelete'
 import { copyToClipboard, removeAnimation } from '@/utils'
 import dayjs from 'dayjs'
+import { not } from 'ramda'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import Swal from 'sweetalert2'
@@ -44,6 +45,24 @@ export default function List({ list, loading, setList, setLoading, userId }) {
 
   return (
     <div className="max-w-2xl w-full">
+      <div className="flex flex-row gap-1 items-center justify-end">
+        <input
+          type="checkbox"
+          checked={pre}
+          onChange={e => {
+            setPre(not)
+            console.log(e.target.checked)
+          }}
+        />
+        <span
+          className="cursor-pointer"
+          onClick={e => {
+            setPre(not)
+          }}
+        >
+          preformatted
+        </span>
+      </div>
       {list.map(item => (
         <div
           id={item._id}
