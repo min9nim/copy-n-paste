@@ -87,7 +87,7 @@ export default function List({ list, loading, setList, setLoading, userId }) {
             />
           )}
           <div className="flex flex-row gap-2 justify-between items-center text-gray-500 italic w-full px-2 text-sm">
-            <div className="flex flex-row gap-2 items-center text-gray-500 italic">
+            <div className="flex flex-row items-center text-gray-500 italic">
               <div>expires in {dayjs(item.expireAt).format('YYYY.MM.DD')}</div>
               <div
                 className="hover:scale-110 cursor-pointer"
