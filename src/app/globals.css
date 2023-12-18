@@ -19,6 +19,7 @@ body {
 }
 
 a {
+  font-style: italic;
   color: rgb(14 165 233); /* text-sky-500 */
 }
 
