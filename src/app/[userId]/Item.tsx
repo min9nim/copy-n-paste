@@ -1,10 +1,39 @@
 import IconCopy from '@/components/icons/IconCopy'
 import IconDelete from '@/components/icons/IconDelete'
-import { copyToClipboard, enableUrl } from '@/utils'
+import { copyToClipboard, enableUrl, removeAnimation } from '@/utils'
 import dayjs from 'dayjs'
 import toast from 'react-hot-toast'
+import Swal from 'sweetalert2'
 
-export default function Item({ item, pre, deleteItem }) {
+export default function Item({ item, pre, setList, userId }) {
+  const deleteItem = async item => {
+    const result = await Swal.fire({
+      title: `Delete this text?`,
+      html: `<span class="text-gray-400">${
+        item.text.length > 50
+          ? item.text.slice(20) + ' ... ' + item.text.slice(-20)
+          : item.text
+      }</span>`,
+      // icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    })
+
+    if (result.isConfirmed) {
+      await removeAnimation(document.getElementById(item._id), 0.5)
+      await fetch('/api/delete', {
+        method: 'delete',
+        body: JSON.stringify({ _id: item._id }),
+      })
+      const list = await fetch('/api/list?userId=' + userId).then(res =>
+        res.json(),
+      )
+      setList(list)
+      toast.success('deleted')
+    }
+  }
   return (
     <div
       id={item._id}

@@ -29,6 +29,7 @@ export default function Home({ params }) {
   useEffect(() => {
     localStorage.setItem(USER_ID, userId)
   }, [userId])
+
   return (
     <main className="flex min-h-screen flex-col items-center px-2 py-4 gap-2">
       <div className="flex items-center justify-between w-full max-w-2xl">
@@ -56,14 +57,11 @@ export default function Home({ params }) {
       </div>
       <Form userId={userId} setList={setList} />
       <hr className="h-4" />
-      <List
-        list={list}
-        setList={setList}
-        loading={loading}
-        setLoading={setLoading}
-        userId={userId}
-      />
-
+      {list.length === 0 && loading ? (
+        <div className="animate-spin">@@</div>
+      ) : (
+        <List list={list} setList={setList} userId={userId} />
+      )}
       <Toaster />
     </main>
   )
