@@ -10,8 +10,12 @@ import toast from 'react-hot-toast'
 export default function ItemFooter({ loading, item, deleteItem }) {
   const isClient = useIsClient()
   return (
-    <div className="flex flex-row gap-2 justify-between items-center text-gray-500 italic w-full px-4 text-sm">
-      <div className="flex flex-row items-center text-gray-500 italic">
+    <div
+      className={`flex flex-row gap-2 justify-between items-center italic w-full px-4 text-sm ${
+        loading ? 'text-gray-700' : 'text-gray-500'
+      }`}
+    >
+      <div className="flex flex-row items-center italic">
         {isClient && document.body.clientWidth > 672 && (
           <div
             className={`mr-2 ${
@@ -35,7 +39,7 @@ export default function ItemFooter({ loading, item, deleteItem }) {
           <IconDelete size={35} />
         </div>
       </div>
-      <div className="flex flex-row gap-2 items-center text-gray-500 italic">
+      <div className="flex flex-row gap-2 items-center italic">
         <div>{dayjs(item.createdAt).fromNow()}</div>
         <div
           className={
