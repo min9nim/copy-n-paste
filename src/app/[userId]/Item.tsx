@@ -2,8 +2,7 @@
 
 import IconCopy from '@/components/icons/IconCopy'
 import IconDelete from '@/components/icons/IconDelete'
-import { copyToClipboard, enableUrl } from '@/utils'
-import { clsNms } from '@madup-inc/utils'
+import { clsNms, copyToClipboard, enableUrl } from '@/utils'
 import dayjs from 'dayjs'
 import { useParams } from 'next/navigation'
 import { useRef, useState } from 'react'

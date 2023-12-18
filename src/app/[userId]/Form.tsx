@@ -3,8 +3,7 @@
 import Button from '@/components/Button'
 import Radio from '@/components/Radio'
 import { ONE_DAY } from '@/constant'
-import { textFromClipboard } from '@/utils'
-import { clsNms } from '@madup-inc/utils'
+import { clsNms, textFromClipboard } from '@/utils'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
