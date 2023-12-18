@@ -2,6 +2,7 @@
 import IconLogo from '@/components/icons/IconLogo'
 import { USER_ID } from '@/constant'
 import { copyToClipboard } from '@/utils'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import Form from './Form'
@@ -11,7 +12,7 @@ export default function Home({ params }) {
   const userId = params.userId
   const [list, setList] = useState<any[]>([])
   const [loading, setLoading] = useState<boolean>(false)
-
+  const router = useRouter()
   useEffect(() => {
     fetch('/api/delete-expired', { method: 'delete' })
       .then(res => res.json())
@@ -34,8 +35,9 @@ export default function Home({ params }) {
     <main className="flex min-h-screen flex-col items-center px-2 py-4 gap-2">
       <div className="flex items-center justify-between w-full max-w-2xl">
         <div
-          className="flex items-center max-w-2xl"
+          className="flex items-center max-w-2xl cursor-pointer"
           style={{ marginLeft: -10 }}
+          onClick={() => router.push('/')}
         >
           <IconLogo size={30} />
           <div
