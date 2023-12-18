@@ -67,3 +67,35 @@ export const enableUrl = (str: string): string => {
   }
   return str
 }
+
+export const classNames = (...params: any[]): string => {
+  const result = params.reduce((acc, value) => {
+    if (!value) {
+      return acc
+    }
+    if (typeof value === 'boolean') {
+      throw Error('Boolean type is not acceptable')
+    }
+    if (typeof value === 'string') {
+      return acc + ' ' + value
+    }
+    const classes = Object.entries(value).reduce(
+      (acc, [key, value]) => acc + (value ? ' ' + key : ''),
+      '',
+    )
+    return acc + classes
+  }, '')
+
+  return result ? result.trim() : undefined
+}
+
+export const camelToKabab = (value: string) =>
+  value.replace(
+    /[a-z|0-9][A-Z][a-z|0-9]/g,
+    match => match[0] + '-' + match.slice(1).toLowerCase(),
+  )
+
+export const clsNms = (...params: any[]): string => {
+  const classString = classNames(...params)
+  return classString ? camelToKabab(classString) : classString
+}
