@@ -2,7 +2,7 @@
 
 import IconCopy from '@/components/icons/IconCopy'
 import IconDelete from '@/components/icons/IconDelete'
-import { copyToClipboard, enableUrl, removeAnimation } from '@/utils'
+import { copyToClipboard, enableUrl } from '@/utils'
 import dayjs from 'dayjs'
 import { useParams } from 'next/navigation'
 import { useState } from 'react'
@@ -29,7 +29,6 @@ export default function Item({ item, pre, setList }) {
     })
 
     if (result.isConfirmed) {
-      await removeAnimation(document.getElementById(item._id), 0.5)
       setLoading(true)
       await fetch('/api/delete', {
         method: 'delete',
