@@ -52,7 +52,7 @@ export default function Form({ userId, setList }) {
       )}
       <div className="flex flex-row flex-wrap justify-between">
         <div className="mb-1 flex flex-row gap-2">
-          {document.body.clientWidth > 672 && (
+          {typeof document === 'object' && document.body.clientWidth > 672 && (
             <Button
               label="Save"
               onClick={async () => {
