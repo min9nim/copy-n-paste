@@ -51,7 +51,16 @@ export default function Form({ userId, setList }) {
         </div>
       )}
       <div className="flex flex-row flex-wrap justify-between">
-        <div className="mb-1">
+        <div className="mb-1 flex flex-row gap-2">
+          {document.body.clientWidth > 672 && (
+            <Button
+              label="Save"
+              onClick={async () => {
+                await saveText({ text, userId, expire })
+              }}
+              disable={loading}
+            />
+          )}
           <Button
             label="Paste"
             onClick={async () => {
