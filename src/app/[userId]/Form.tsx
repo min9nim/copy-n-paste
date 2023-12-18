@@ -4,10 +4,14 @@ import Button from '@/components/Button'
 import Radio from '@/components/Radio'
 import { ONE_DAY } from '@/constant'
 import { textFromClipboard } from '@/utils'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
 export default function Form({ userId, setList }) {
+  const [isClient, setIsClient] = useState(false)
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
   const [text, setText] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const [expire, setExpire] = useState<number>(ONE_DAY * 31)
@@ -52,7 +56,7 @@ export default function Form({ userId, setList }) {
       )}
       <div className="flex flex-row flex-wrap justify-between">
         <div className="mb-1 flex flex-row gap-2">
-          {typeof document === 'object' && document.body.clientWidth > 672 && (
+          {isClient && document.body.clientWidth > 672 && (
             <Button
               label="Save"
               onClick={async () => {
