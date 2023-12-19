@@ -1,6 +1,6 @@
 'use client'
 
-import { clsNms, enableUrl } from 'mingutils'
+import { clsNms, enableUrl, go, nl2br } from 'mingutils'
 import { useParams } from 'next/navigation'
 import { useRef, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -70,7 +70,7 @@ export default function Item({ item, pre, setList }) {
         <div
           className="w-full py-3 px-3 break-all word-wrap"
           dangerouslySetInnerHTML={{
-            __html: enableUrl(item.text).replaceAll('\n', '<br/>'),
+            __html: go(item.text, enableUrl, nl2br),
           }}
         />
       )}
