@@ -28,6 +28,7 @@ export default function Home({ params }) {
   }, [])
 
   useEffect(() => {
+    document.title += ' - ' + userId
     localStorage.setItem(USER_ID, userId)
   }, [userId])
 
