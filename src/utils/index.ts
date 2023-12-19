@@ -8,15 +8,6 @@ export const isProd =
 
 export const API_URL = isProd ? `https://${PROD_HOST}` : 'http://localhost:3000'
 
-export const copyToClipboard = val => {
-  let t = document.createElement('textarea')
-  document.body.appendChild(t)
-  t.value = val
-  t.select()
-  document.execCommand('copy')
-  document.body.removeChild(t)
-}
-
 export const textFromClipboard = async () => {
   const str = await navigator.clipboard.readText().catch(err => {
     const msg = 'Failed to read clipboard contents: '

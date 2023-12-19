@@ -3,8 +3,8 @@
 import IconCopy from '@/components/icons/IconCopy'
 import IconDelete from '@/components/icons/IconDelete'
 import useIsClient from '@/hooks/useIsClient'
-import { copyToClipboard } from '@/utils'
 import dayjs from 'dayjs'
+import { copyToClipboard } from 'mingutils'
 import toast from 'react-hot-toast'
 
 export default function ItemFooter({ loading, item, deleteItem }) {

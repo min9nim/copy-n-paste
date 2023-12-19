@@ -1,7 +1,7 @@
 'use client'
 import IconLogo from '@/components/icons/IconLogo'
 import { USER_ID } from '@/constant'
-import { copyToClipboard } from '@/utils'
+import { copyToClipboard } from 'mingutils'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'

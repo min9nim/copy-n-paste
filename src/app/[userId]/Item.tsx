@@ -1,6 +1,6 @@
 'use client'
 
-import { clsNms, enableUrl } from '@/utils'
+import { clsNms, enableUrl } from 'mingutils'
 import { useParams } from 'next/navigation'
 import { useRef, useState } from 'react'
 import toast from 'react-hot-toast'

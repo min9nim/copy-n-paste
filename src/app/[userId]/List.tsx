@@ -1,8 +1,8 @@
 'use client'
 
 import IconSpin from '@/components/icons/IconSpin'
-import { clsNms } from '@/utils'
 import dayjs from 'dayjs'
+import { clsNms } from 'mingutils'
 import { useParams } from 'next/navigation'
 import { not } from 'ramda'
 import { useState } from 'react'
