@@ -1,6 +1,7 @@
 'use client'
 
 import { USER_ID } from '@/constant'
+import { createRandomString } from 'mingutils'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
@@ -10,7 +11,7 @@ export default function Home() {
   useEffect(() => {
     let userId = localStorage.getItem(USER_ID)
     if (!userId) {
-      userId = Math.random().toString(36).slice(2)
+      userId = createRandomString(10)
     }
 
     router.push('/' + userId)
