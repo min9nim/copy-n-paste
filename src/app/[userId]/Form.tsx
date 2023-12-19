@@ -70,7 +70,7 @@ export default function Form({ userId, setList }) {
             label="Paste"
             onClick={async () => {
               const value = await textFromClipboard()
-              setText(value)
+              setText(text => text + value)
             }}
             disable={loading}
           />
@@ -103,8 +103,8 @@ export default function Form({ userId, setList }) {
             label="Paste & Save"
             onClick={async () => {
               const value = await textFromClipboard()
-              setText(value)
-              await saveText({ text: value, userId, expire })
+              setText(text => text + value)
+              await saveText({ text: text + value, userId, expire })
             }}
             disable={loading}
           />
