@@ -1,15 +1,20 @@
 'use client'
 
 import IconSpin from '@/components/icons/IconSpin'
+import { clsNms } from '@/utils'
 import dayjs from 'dayjs'
+import { useParams } from 'next/navigation'
 import { not } from 'ramda'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 import Item from './Item'
 
 dayjs.extend(require('dayjs/plugin/relativeTime'))
 
 export default function List({ list, setList }) {
+  const { userId } = useParams()
   const [pre, setPre] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
 
   return (
     <div className="max-w-2xl w-full">
@@ -17,7 +22,26 @@ export default function List({ list, setList }) {
         className="flex flex-row items-center justify-between"
         style={{ marginBottom: -10 }}
       >
-        <IconSpin size={23} />
+        <div
+          onClick={async () => {
+            if (loading) {
+              return
+            }
+            setLoading(true)
+            const list = await fetch(`/api/list?userId=${userId}`).then(res =>
+              res.json(),
+            )
+            setList(list)
+            setLoading(false)
+            toast.success('Synchronized')
+          }}
+          className={clsNms(
+            { 'cursor-pointer': !loading },
+            { 'animate-spin': loading },
+          )}
+        >
+          <IconSpin size={23} />
+        </div>
         <div className="flex flex-row gap-1 items-center justify-end">
           <input
             type="checkbox"
