@@ -45,7 +45,7 @@ export default function Item({ item, pre, setList }) {
   return (
     <div
       ref={divRef}
-      className={clsNms('flex flex-col items-end my-4 bg-gray-900', {
+      className={clsNms('flex flex-col items-end my-3 bg-gray-900', {
         'text-gray-700': loading,
       })}
       key={item._id}

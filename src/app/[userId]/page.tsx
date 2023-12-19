@@ -33,7 +33,7 @@ export default function Home({ params }) {
   }, [userId])
 
   return (
-    <main className="flex min-h-screen flex-col items-center px-2 py-4 gap-2">
+    <main className="flex min-h-screen flex-col items-center px-2 py-4 gap-1">
       <div className="flex items-center justify-between w-full max-w-2xl">
         <div
           className="flex items-center max-w-2xl cursor-pointer"
