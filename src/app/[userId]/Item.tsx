@@ -16,8 +16,8 @@ export default function Item({ item, pre, setList }) {
     const result = await Swal.fire({
       title: `Delete this text?`,
       html: `<span class="text-gray-400">${
-        item.text.length > 50
-          ? item.text.slice(20) + ' ... ' + item.text.slice(-20)
+        item.text.length > 200
+          ? item.text.slice(0, 100) + ' ... ' + item.text.slice(-100)
           : item.text
       }</span>`,
       // icon: 'warning',
