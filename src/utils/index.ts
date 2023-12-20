@@ -1,3 +1,4 @@
+import { queryObjToStr } from 'mingutils'
 import toast from 'react-hot-toast'
 
 export const isBrowser = typeof window === 'object'
@@ -42,3 +43,18 @@ export async function createText(client, text) {
 
 export const textsCollection = client =>
   client.db('copy-n-paste').collection('texts')
+
+export const req = {
+  get: (url, searchParams) =>
+    fetch(url + '?' + queryObjToStr(searchParams), { method: 'get' }).then(
+      res => res.json(),
+    ),
+  post: (url, payload) =>
+    fetch(url, { method: 'post', body: JSON.stringify(payload) }).then(res =>
+      res.json(),
+    ),
+  delete: (url, payload) =>
+    fetch(url, { method: 'delete', body: JSON.stringify(payload) }).then(res =>
+      res.json(),
+    ),
+}
