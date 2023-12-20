@@ -1,6 +1,7 @@
 'use client'
 import IconLogo from '@/components/icons/IconLogo'
 import { USER_ID } from '@/constant'
+import { req } from '@/utils'
 import { copyToClipboard } from 'mingutils'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -14,17 +15,13 @@ export default function Home({ params }) {
   const [loading, setLoading] = useState<boolean>(false)
   const router = useRouter()
   useEffect(() => {
-    fetch('/api/delete-expired', { method: 'delete' })
-      .then(res => res.json())
-      .then(() => console.info('Expired items deleted'))
+    req.delete('/api/delete-expired')
 
     setLoading(true)
-    fetch('/api/list?userId=' + userId)
-      .then(res => res.json())
-      .then(list => {
-        setList(list)
-        setLoading(false)
-      })
+    req.get('/api/list', { userId }).then(list => {
+      setList(list)
+      setLoading(false)
+    })
   }, [])
 
   useEffect(() => {

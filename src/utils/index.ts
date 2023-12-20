@@ -49,11 +49,11 @@ export const req = {
     fetch(url + '?' + queryObjToStr(searchParams), { method: 'get' }).then(
       res => res.json(),
     ),
-  post: (url, payload) =>
+  post: (url, payload = {}) =>
     fetch(url, { method: 'post', body: JSON.stringify(payload) }).then(res =>
       res.json(),
     ),
-  delete: (url, payload) =>
+  delete: (url, payload = {}) =>
     fetch(url, { method: 'delete', body: JSON.stringify(payload) }).then(res =>
       res.json(),
     ),
