@@ -1,6 +1,7 @@
 'use client'
 
 import IconSpin from '@/components/icons/IconSpin'
+import { req } from '@/utils'
 import dayjs from 'dayjs'
 import { clsNms } from 'mingutils'
 import { useParams } from 'next/navigation'
@@ -28,9 +29,8 @@ export default function List({ list, setList }) {
               return
             }
             setLoading(true)
-            const list = await fetch(`/api/list?userId=${userId}`).then(res =>
-              res.json(),
-            )
+
+            const list = await req.get('api/list', { userId })
             setList(list)
             setLoading(false)
             toast.success('Synchronized')

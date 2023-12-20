@@ -4,7 +4,7 @@ import Button from '@/components/Button'
 import Radio from '@/components/Radio'
 import { ONE_DAY } from '@/constant'
 import useIsClient from '@/hooks/useIsClient'
-import { textFromClipboard } from '@/utils'
+import { req, textFromClipboard } from '@/utils'
 import { clsNms } from 'mingutils'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
@@ -21,13 +21,8 @@ export default function Form({ userId, setList }) {
       return
     }
     setLoading(true)
-    await fetch(`/api/save`, {
-      method: 'post',
-      body: JSON.stringify({ text: text.trim(), userId, expire }),
-    }).then(res => res.json())
-    const list = await fetch(`/api/list?userId=${userId}`).then(res =>
-      res.json(),
-    )
+    await req.post('/api/save', { text: text.trim(), userId, expire })
+    const list = await req.get('/api/list', { userId })
     setList(list)
     setText('')
     setLoading(false)

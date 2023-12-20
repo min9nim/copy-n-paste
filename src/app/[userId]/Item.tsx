@@ -1,5 +1,6 @@
 'use client'
 
+import { req } from '@/utils'
 import { clsNms, enableUrl, go, nl2br } from 'mingutils'
 import { useParams } from 'next/navigation'
 import { useRef, useState } from 'react'
@@ -29,13 +30,8 @@ export default function Item({ item, pre, setList }) {
 
     if (result.isConfirmed) {
       setLoading(true)
-      await fetch('/api/delete', {
-        method: 'delete',
-        body: JSON.stringify({ _id: item._id }),
-      })
-      const list = await fetch('/api/list?userId=' + userId).then(res =>
-        res.json(),
-      )
+      await req.delete('/api/delete', { _id: item._id })
+      const list = await req.get('/api/list', { userId })
       setList(list)
       setLoading(false)
       toast.success('deleted')
