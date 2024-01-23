@@ -1,6 +1,8 @@
 import { queryObjToStr } from 'mingutils'
 import toast from 'react-hot-toast'
 
+import { ONE_DAY } from '@/constant'
+
 export const isBrowser = typeof window === 'object'
 export const PROD_HOST = 'copy-n-paste.vercel.app'
 export const isProd =
@@ -58,3 +60,10 @@ export const req = {
       res.json(),
     ),
 }
+
+export const colorByExpireAt = (expireAt, nowTimestamp) => ({
+  'text-yellow-400':
+    expireAt - nowTimestamp > ONE_DAY * 3 &&
+    expireAt - nowTimestamp < ONE_DAY * 7,
+  'text-red-400': expireAt - nowTimestamp < ONE_DAY * 3,
+})

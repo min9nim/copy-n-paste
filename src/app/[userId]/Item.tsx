@@ -1,6 +1,6 @@
 'use client'
 
-import { req } from '@/utils'
+import { colorByExpireAt, req } from '@/utils'
 import { clsNms, enableUrl, go, nl2br } from 'mingutils'
 import { useParams } from 'next/navigation'
 import { useRef, useState } from 'react'
@@ -43,7 +43,7 @@ export default function Item({ item, pre, setList }) {
       ref={divRef}
       className={clsNms('flex flex-col items-end my-3 bg-gray-900', {
         'text-gray-700': loading,
-        'text-yellow-400': item.expireAt - Date.now() < 1000 * 60 * 60 * 24 * 7,
+        ...colorByExpireAt(item.expireAt, Date.now()),
       })}
       key={item._id}
     >
