@@ -2,18 +2,23 @@
 
 import IconCopy from '@/components/icons/IconCopy'
 import IconDelete from '@/components/icons/IconDelete'
+import { ONE_DAY } from '@/constant'
 import useIsClient from '@/hooks/useIsClient'
 import dayjs from 'dayjs'
-import { copyToClipboard } from 'mingutils'
+import { clsNms, copyToClipboard } from 'mingutils'
 import toast from 'react-hot-toast'
 
 export default function ItemFooter({ loading, item, deleteItem }) {
   const isClient = useIsClient()
   return (
     <div
-      className={`flex flex-row gap-2 justify-between items-center italic w-full px-3 text-sm ${
-        loading ? 'text-gray-700' : 'text-gray-500'
-      }`}
+      className={clsNms(
+        `flex flex-row gap-2 justify-between items-center italic w-full px-3 text-sm`,
+        loading ? 'text-gray-700' : 'text-gray-500',
+        {
+          'text-yellow-400': item.expireAt - Date.now() < ONE_DAY * 7,
+        },
+      )}
     >
       <div className="flex flex-row items-center italic">
         {isClient && document.body.clientWidth > 672 && (

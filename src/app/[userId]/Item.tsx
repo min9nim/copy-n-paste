@@ -43,6 +43,7 @@ export default function Item({ item, pre, setList }) {
       ref={divRef}
       className={clsNms('flex flex-col items-end my-3 bg-gray-900', {
         'text-gray-700': loading,
+        'text-yellow-400': item.expireAt - Date.now() < 1000 * 60 * 60 * 24 * 7,
       })}
       key={item._id}
     >
