@@ -67,7 +67,7 @@ export default function Item({ item, pre, setList }) {
         <div
           className="w-full py-3 px-3 break-all word-wrap"
           dangerouslySetInnerHTML={{
-            __html: go(item.text, enableUrl, nl2br),
+            __html: go(item.text, str => enableUrl(str, '_blank'), nl2br),
           }}
         />
       )}
