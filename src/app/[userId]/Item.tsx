@@ -78,7 +78,7 @@ export default function Item({ item, pre, setList }) {
         <div className="flex flex-row px-3 items-center gap-2">
           <div className="flex flex-col gap-1">
             <div className="flex flex-row gap-1 items-center">
-              <div>
+              <div style={{ minWidth: 20 }}>
                 <img src={item.favicon} width={20} alt={item.title} />
               </div>
               <a
@@ -93,10 +93,10 @@ export default function Item({ item, pre, setList }) {
             <div className="text-sm text-gray-400">
               <img
                 src={item.image}
-                style={{ float: 'right', maxWidth: imgWidth }}
+                style={{ float: 'right', maxWidth: imgWidth, marginLeft: 3 }}
                 alt={item.title}
               />
-              {item.desc.slice(0, 130)}
+              {item.desc}
             </div>
           </div>
         </div>
