@@ -20,12 +20,45 @@ export async function POST(request: Request) {
     }
     await client.connect()
     const timestamp = Date.now()
-    await createText(client, {
-      text,
-      createdAt: timestamp,
-      expireAt: timestamp + expire,
-      userId,
-    })
+
+    let urlRegex = /(https?:\/\/[^ ]*)/
+    let res = text.match(urlRegex)
+    if (res) {
+      const url = res[1]
+      const { title, image, desc, favicon } = await fetch(
+        'https://webscrap.vercel.app/webscrap',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            url,
+          }),
+        },
+      ).then(res => res.json())
+
+      console.log({ url, title, image, desc, favicon })
+
+      await createText(client, {
+        text,
+        createdAt: timestamp,
+        expireAt: timestamp + expire,
+        userId,
+        title,
+        image,
+        desc,
+        favicon,
+        url,
+      })
+    } else {
+      await createText(client, {
+        text,
+        createdAt: timestamp,
+        expireAt: timestamp + expire,
+        userId,
+      })
+    }
 
     return NextResponse.json(
       { message: 'ok', text },
