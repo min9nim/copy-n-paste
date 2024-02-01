@@ -80,7 +80,7 @@ export default function Item({ item, pre, setList }) {
 
           <div className="flex flex-row gap-2">
             <div className="text-sm text-gray-400">{item.desc}</div>
-            <img src={item.image} width={100} height={100} alt={item.title} />
+            <img src={item.image} width={100} alt={item.title} />
           </div>
         </div>
       )}
