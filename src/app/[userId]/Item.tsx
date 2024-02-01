@@ -71,6 +71,20 @@ export default function Item({ item, pre, setList }) {
           }}
         />
       )}
+      {item.title && (
+        <div className="flex flex-col gap-1 px-3">
+          <div className="flex flex-row gap-1">
+            <img src={item.favicon} width={20} height={20} alt={item.title} />
+            <div className="font-bold">{item.title}</div>
+          </div>
+
+          <div className="flex flex-row gap-2">
+            <div className="text-sm text-gray-400">{item.desc}</div>
+            <img src={item.image} width={100} height={100} alt={item.title} />
+          </div>
+        </div>
+      )}
+
       <ItemFooter item={item} deleteItem={deleteItem} loading={loading} />
     </div>
   )
