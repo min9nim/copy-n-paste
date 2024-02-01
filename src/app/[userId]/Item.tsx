@@ -73,8 +73,10 @@ export default function Item({ item, pre, setList }) {
       )}
       {item.title && (
         <div className="flex flex-col gap-1 px-3">
-          <div className="flex flex-row gap-1">
-            <img src={item.favicon} width={20} alt={item.title} />
+          <div className="flex flex-row gap-1 items-center">
+            <div>
+              <img src={item.favicon} width={20} alt={item.title} />
+            </div>
             <div className="font-bold">{item.title}</div>
           </div>
 
