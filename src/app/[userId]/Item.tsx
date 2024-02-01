@@ -41,7 +41,7 @@ export default function Item({ item, pre, setList }) {
   return (
     <div
       ref={divRef}
-      className={clsNms('flex flex-col items-end my-3 bg-gray-900', {
+      className={clsNms('flex flex-col my-3 bg-gray-900', {
         'text-gray-700': loading,
         ...colorByExpireAt(item.expireAt, Date.now()),
       })}
@@ -72,17 +72,27 @@ export default function Item({ item, pre, setList }) {
         />
       )}
       {item.title && (
-        <div className="flex flex-col gap-1 px-3">
-          <div className="flex flex-row gap-1 items-center">
-            <div>
-              <img src={item.favicon} width={20} alt={item.title} />
+        <div className="flex flex-row">
+          <div className="flex flex-col gap-1 px-3">
+            <div className="flex flex-row gap-1 items-center">
+              <div>
+                <img src={item.favicon} width={20} alt={item.title} />
+              </div>
+              <a
+                href={item.url}
+                target="_blank"
+                className="font-bold text-gray-100 cursor-pointer not-italic"
+              >
+                {item.title}
+              </a>
             </div>
-            <div className="font-bold">{item.title}</div>
-          </div>
 
-          <div className="flex flex-row gap-2">
-            <div className="text-sm text-gray-400">{item.desc}</div>
-            <img src={item.image} width={100} alt={item.title} />
+            <div className="text-sm text-gray-400">
+              {item.desc.slice(0, 130)}
+            </div>
+          </div>
+          <div className="flex flex-row gap-2" style={{ minWidth: 200 }}>
+            <img src={item.image} width={200} alt={item.title} />
           </div>
         </div>
       )}
