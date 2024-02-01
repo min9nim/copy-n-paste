@@ -1,5 +1,6 @@
 'use client'
 
+import useIsMobile from '@/hooks/useIsMobile'
 import { colorByExpireAt, req } from '@/utils'
 import { clsNms, enableUrl, go, nl2br } from 'mingutils'
 import { useParams } from 'next/navigation'
@@ -12,6 +13,8 @@ export default function Item({ item, pre, setList }) {
   const userId = useParams().userId
   const divRef = useRef<HTMLDivElement>(null)
   const [loading, setLoading] = useState<boolean>(false)
+  const isMobile = useIsMobile()
+  const imgWidth = isMobile ? 100 : 200
 
   const deleteItem = async item => {
     const result = await Swal.fire({
@@ -72,8 +75,8 @@ export default function Item({ item, pre, setList }) {
         />
       )}
       {item.title && (
-        <div className="flex flex-row">
-          <div className="flex flex-col gap-1 px-3">
+        <div className="flex flex-row px-3 items-center gap-2">
+          <div className="flex flex-col gap-1">
             <div className="flex flex-row gap-1 items-center">
               <div>
                 <img src={item.favicon} width={20} alt={item.title} />
@@ -88,11 +91,13 @@ export default function Item({ item, pre, setList }) {
             </div>
 
             <div className="text-sm text-gray-400">
+              <img
+                src={item.image}
+                style={{ float: 'right', maxWidth: imgWidth }}
+                alt={item.title}
+              />
               {item.desc.slice(0, 130)}
             </div>
-          </div>
-          <div className="flex flex-row gap-2" style={{ minWidth: 200 }}>
-            <img src={item.image} width={200} alt={item.title} />
           </div>
         </div>
       )}
