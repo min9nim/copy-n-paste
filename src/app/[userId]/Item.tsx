@@ -90,13 +90,19 @@ export default function Item({ item, pre, setList }) {
               </a>
             </div>
 
-            <div className="text-sm text-gray-400">
+            <div>
               <img
                 src={item.image}
                 style={{ float: 'right', maxWidth: imgWidth, marginLeft: 3 }}
                 alt={item.title}
               />
-              {item.desc}
+              <a
+                href={item.url}
+                target="_blank"
+                className="text-sm text-gray-400 cursor-pointer not-italic"
+              >
+                {item.desc}
+              </a>
             </div>
           </div>
         </div>
