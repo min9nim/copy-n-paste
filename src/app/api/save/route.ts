@@ -25,18 +25,16 @@ export async function POST(request: Request) {
     let res = text.match(urlRegex)
     if (res) {
       const url = res[1]
-      const { title, image, desc, favicon } = await fetch(
-        'https://webscrap.vercel.app/webscrap',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            url,
-          }),
+      const {
+        title,
+        image,
+        description: desc,
+        favicon,
+      } = await fetch('https://honey2.vercel.app/api/og?url=' + url, {
+        headers: {
+          'Content-Type': 'application/json',
         },
-      ).then(res => res.json())
+      }).then(res => res.json())
 
       console.log({ url, title, image, desc, favicon })
 
