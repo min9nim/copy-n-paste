@@ -25,16 +25,7 @@ export async function POST(request: Request) {
     let res = text.match(urlRegex)
     if (res) {
       const url = res[1]
-      const {
-        title,
-        image,
-        description: desc,
-        favicon,
-      } = await fetch('https://honey2.vercel.app/api/og?url=' + url, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }).then(res => res.json())
+      const { title, image, description: desc, favicon } = await excerpt(url)
 
       console.log({ url, title, image, desc, favicon })
 
@@ -73,5 +64,30 @@ export async function POST(request: Request) {
         status: 500,
       },
     )
+  }
+}
+
+async function excerpt(url: string) {
+  const res = await fetch(url)
+  if (!res.ok) {
+    throw Error(`[${res.status}] res.ok is falsy`)
+  }
+
+  const html = await res.text()
+
+  const title = html.match(new RegExp(`property="og:title" content="([^"]+)"`))
+  const description = html.match(
+    new RegExp(`property="og:description" content="([^"]+)"`),
+  )
+  const image = html.match(new RegExp(`property="og:image" content="([^"]+)"`))
+  const favicon = html.match(
+    new RegExp(`<link rel="shortcut icon" href="([^"]+)"`),
+  )
+
+  return {
+    title: title ? title[1] : 'not found',
+    description: description ? description[1] : 'not found',
+    image: image ? image[1] : 'not found',
+    favicon: favicon ? favicon[1] : 'not found',
   }
 }
