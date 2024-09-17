@@ -74,7 +74,7 @@ async function excerpt(url: string) {
   }
 
   const html = await res.text()
-  console.log('[html]', html.slice(0, 2500))
+  console.log('[html2]', html.slice(0, 2500))
 
   const title = html.match(new RegExp(`property="og:title" content="([^"]+)"`))
   const description = html.match(
