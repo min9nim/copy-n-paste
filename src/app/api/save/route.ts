@@ -1,4 +1,4 @@
-import { createText } from '@/utils'
+import { createText, req } from '@/utils'
 import { MongoClient } from 'mongodb'
 import { NextResponse } from 'next/server'
 
@@ -25,7 +25,14 @@ export async function POST(request: Request) {
     let res = text.match(urlRegex)
     if (res) {
       const url = res[1]
-      const { title, image, description: desc, favicon } = await excerpt(url)
+      // const { title, image, description: desc, favicon } = await excerpt(url)
+
+      const {
+        title,
+        image,
+        description: desc,
+        favicon,
+      } = await req.get('http://115.140.124.99:4529/excerpt', { url })
 
       console.log({ url, title, image, desc, favicon })
 
