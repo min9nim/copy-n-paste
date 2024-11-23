@@ -32,7 +32,17 @@ export async function POST(request: Request) {
         image,
         description: desc,
         favicon,
-      } = await req.get('http://115.140.124.99:4529/excerpt', { url })
+      } = await req
+        .get('http://116.38.147.136:4529/excerpt', { url })
+        .catch(e => {
+          console.error(e.message)
+          return {
+            title: 'xx',
+            image: '',
+            description: 'xx',
+            favicon: '',
+          }
+        })
 
       console.log({ url, title, image, desc, favicon })
 
