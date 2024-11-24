@@ -25,25 +25,6 @@ export async function POST(request: Request) {
     let res = text.match(urlRegex)
     if (res) {
       const url = res[1]
-      // const { title, image, description: desc, favicon } = await excerpt(url)
-
-      // const {
-      //   title,
-      //   image,
-      //   description: desc,
-      //   favicon,
-      // } = await req
-      //   .get('http://116.38.147.136:4529/excerpt', { url })
-      //   .catch(e => {
-      //     console.error(e.message)
-      //     return {
-      //       title: 'xx',
-      //       image: '',
-      //       description: 'xx',
-      //       favicon: '',
-      //     }
-      //   })
-
       const {
         title,
         image,
