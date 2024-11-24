@@ -1,4 +1,4 @@
-import { createText, req } from '@/utils'
+import { createText, getExcerpt } from '@/utils'
 import { MongoClient } from 'mongodb'
 import { NextResponse } from 'next/server'
 
@@ -27,22 +27,37 @@ export async function POST(request: Request) {
       const url = res[1]
       // const { title, image, description: desc, favicon } = await excerpt(url)
 
+      // const {
+      //   title,
+      //   image,
+      //   description: desc,
+      //   favicon,
+      // } = await req
+      //   .get('http://116.38.147.136:4529/excerpt', { url })
+      //   .catch(e => {
+      //     console.error(e.message)
+      //     return {
+      //       title: 'xx',
+      //       image: '',
+      //       description: 'xx',
+      //       favicon: '',
+      //     }
+      //   })
+
       const {
         title,
         image,
         description: desc,
         favicon,
-      } = await req
-        .get('http://116.38.147.136:4529/excerpt', { url })
-        .catch(e => {
-          console.error(e.message)
-          return {
-            title: 'xx',
-            image: '',
-            description: 'xx',
-            favicon: '',
-          }
-        })
+      } = await getExcerpt(url).catch(e => {
+        console.error(e.message)
+        return {
+          title: 'xx',
+          image: '',
+          description: 'xx',
+          favicon: '',
+        }
+      })
 
       console.log({ url, title, image, desc, favicon })
 
