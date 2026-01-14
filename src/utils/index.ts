@@ -79,7 +79,7 @@ export default function excerptFromHtml(html, url) {
     ),
   )
   const favicon = _favicon ? _favicon[1] : '/favicon.ico'
-  const urlObj = URL(url)
+  const urlObj = (URL as any)(url)
 
   const excerpt = {
     title: title ? title[1] : 'not found',
@@ -193,8 +193,7 @@ const isYouTubeUrl = (url: string) => {
 
 const youtubeOEmbed = async (url: string) => {
   const oembedUrl =
-    'https://www.youtube.com/oembed?format=json&url=' +
-    encodeURIComponent(url)
+    'https://www.youtube.com/oembed?format=json&url=' + encodeURIComponent(url)
   const res = await fetch(oembedUrl, {
     headers: {
       'user-agent':
@@ -232,9 +231,7 @@ const youtubeOEmbed = async (url: string) => {
         description = decodeJsonString(shortDesc[1])
       }
       const iconMatch = html.match(
-        new RegExp(
-          `<link[^>]*rel="(?:shortcut )?icon"[^>]*href="([^"]+)"`,
-        ),
+        new RegExp(`<link[^>]*rel="(?:shortcut )?icon"[^>]*href="([^"]+)"`),
       )
       if (iconMatch?.[1]) {
         favicon = resolveUrl(iconMatch[1], url)

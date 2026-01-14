@@ -22,7 +22,7 @@ export default function Home({ params }) {
       setList(list)
       setLoading(false)
     })
-  }, [])
+  }, [userId])
 
   useEffect(() => {
     document.title += ' - ' + userId
