@@ -1,7 +1,7 @@
 import { ONE_DAY } from '@/constant'
 import { oneOf, queryObjToStr } from 'mingutils'
 import toast from 'react-hot-toast'
-import URL from 'url'
+import { parse as parseUrl } from 'url'
 
 export async function xExcerpt(tweetId) {
   const result = await req.get(
@@ -79,7 +79,7 @@ export default function excerptFromHtml(html, url) {
     ),
   )
   const favicon = _favicon ? _favicon[1] : '/favicon.ico'
-  const urlObj = (URL as any)(url)
+  const urlObj = parseUrl(url)
 
   const excerpt = {
     title: title ? title[1] : 'not found',
@@ -261,7 +261,7 @@ const resolveUrl = (href: string, baseUrl: string) => {
   if (href.startsWith('http')) {
     return href
   }
-  const parsed = URL.parse(baseUrl)
+  const parsed = parseUrl(baseUrl)
   if (href.startsWith('//')) {
     return (parsed.protocol ?? 'https:') + href
   }
