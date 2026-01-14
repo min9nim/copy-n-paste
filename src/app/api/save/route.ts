@@ -25,6 +25,7 @@ export async function POST(request: Request) {
     let res = text.match(urlRegex)
     if (res) {
       const url = res[1]
+      console.log('[excerpt] start', { url })
       const {
         title,
         image,
@@ -40,7 +41,7 @@ export async function POST(request: Request) {
         }
       })
 
-      console.log({ url, title, image, desc, favicon })
+      console.log('[excerpt] done', { url, title, image, desc, favicon })
 
       await createText(client, {
         text,

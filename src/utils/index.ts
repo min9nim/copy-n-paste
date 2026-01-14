@@ -79,7 +79,7 @@ export default function excerptFromHtml(html, url) {
     ),
   )
   const favicon = _favicon ? _favicon[1] : '/favicon.ico'
-  const urlObj = URL.parse(url)
+  const urlObj = URL(url)
 
   const excerpt = {
     title: title ? title[1] : 'not found',
@@ -165,6 +165,8 @@ export const getExcerpt = async (url: string) => {
   let excerpt
   if (tweetId) {
     excerpt = await xExcerpt(tweetId)
+  } else if (isYouTubeUrl(url)) {
+    excerpt = await youtubeOEmbed(url)
   } else {
     const result = await fetch(url)
     if (!result.ok) {
@@ -174,6 +176,102 @@ export const getExcerpt = async (url: string) => {
     excerpt = excerptFromHtml(html, url)
   }
   return excerpt
+}
+
+const isYouTubeUrl = (url: string) => {
+  try {
+    return (
+      url.includes('www.youtube.com') ||
+      url.includes('youtube.com') ||
+      url.includes('youtu.be') ||
+      url.includes('.youtube.com')
+    )
+  } catch {
+    return false
+  }
+}
+
+const youtubeOEmbed = async (url: string) => {
+  const oembedUrl =
+    'https://www.youtube.com/oembed?format=json&url=' +
+    encodeURIComponent(url)
+  const res = await fetch(oembedUrl, {
+    headers: {
+      'user-agent':
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+      'accept-language': 'en-US,en;q=0.9',
+    },
+  })
+  if (!res.ok) {
+    throw Error(`[${res.status}] oEmbed res.ok is falsy`)
+  }
+  const data = await res.json()
+  let description = 'not found'
+  let favicon = 'https://www.youtube.com/favicon.ico'
+
+  try {
+    const htmlRes = await fetch(url, {
+      headers: {
+        'user-agent':
+          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+        'accept-language': 'en-US,en;q=0.9',
+      },
+    })
+    if (htmlRes.ok) {
+      const html = await htmlRes.text()
+      const ogDesc =
+        html.match(new RegExp(`property="og:description" content="([^"]+)"`)) ??
+        html.match(new RegExp(`name="description" content="([^"]+)"`))
+      const shortDesc = html.match(
+        new RegExp(`"shortDescription":"((?:\\\\.|[^"])*)"`),
+      )
+      if (ogDesc?.[1]) {
+        description = ogDesc[1]
+      }
+      if (shortDesc?.[1]) {
+        description = decodeJsonString(shortDesc[1])
+      }
+      const iconMatch = html.match(
+        new RegExp(
+          `<link[^>]*rel="(?:shortcut )?icon"[^>]*href="([^"]+)"`,
+        ),
+      )
+      if (iconMatch?.[1]) {
+        favicon = resolveUrl(iconMatch[1], url)
+      }
+    }
+  } catch (e) {
+    console.error('[youtubeOEmbed] html fallback failed', e)
+  }
+
+  return {
+    title: data?.title ?? 'not found',
+    description,
+    image: data?.thumbnail_url ?? 'not found',
+    favicon,
+  }
+}
+
+const decodeJsonString = (value: string) => {
+  try {
+    return JSON.parse('"' + value + '"')
+  } catch {
+    return value
+  }
+}
+
+const resolveUrl = (href: string, baseUrl: string) => {
+  if (href.startsWith('http')) {
+    return href
+  }
+  const parsed = URL.parse(baseUrl)
+  if (href.startsWith('//')) {
+    return (parsed.protocol ?? 'https:') + href
+  }
+  if (href.startsWith('/')) {
+    return (parsed.protocol ?? 'https:') + '//' + parsed.host + href
+  }
+  return href
 }
 
 export function assert(
