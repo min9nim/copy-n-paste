@@ -15,6 +15,10 @@ export default function Item({ item, pre, setList }) {
   const [loading, setLoading] = useState<boolean>(false)
   const isMobile = useIsMobile()
   const imgWidth = isMobile ? 100 : 200
+  const faviconSrc =
+    item.favicon && item.favicon !== 'not found' ? item.favicon : ''
+  const previewImage =
+    item.image && item.image !== 'not found' ? item.image : faviconSrc
 
   const deleteItem = async item => {
     const result = await Swal.fire({
@@ -79,7 +83,7 @@ export default function Item({ item, pre, setList }) {
           <div className="flex flex-col gap-1">
             <div className="flex flex-row gap-1 items-center">
               <div style={{ minWidth: 20 }}>
-                <img src={item.favicon} width={20} alt="image" />
+                {faviconSrc && <img src={faviconSrc} width={20} alt="image" />}
               </div>
               <a
                 href={item.url}
@@ -91,11 +95,13 @@ export default function Item({ item, pre, setList }) {
             </div>
 
             <div>
-              <img
-                src={item.image}
-                style={{ float: 'right', maxWidth: imgWidth, marginLeft: 3 }}
-                alt={item.title}
-              />
+              {previewImage && (
+                <img
+                  src={previewImage}
+                  style={{ float: 'right', maxWidth: imgWidth, marginLeft: 3 }}
+                  alt={item.title}
+                />
+              )}
               <a
                 href={item.url}
                 target="_blank"

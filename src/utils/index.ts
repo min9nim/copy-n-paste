@@ -1,7 +1,53 @@
 import { ONE_DAY } from '@/constant'
-import { oneOf, queryObjToStr } from 'mingutils'
+import { queryObjToStr } from 'mingutils'
 import toast from 'react-hot-toast'
 import { parse as parseUrl } from 'url'
+
+const escapeRegExp = (value: string) =>
+  value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+const matchMetaContent = (
+  html: string,
+  key: string,
+  attr: 'property' | 'name' = 'property',
+) => {
+  const escapedKey = escapeRegExp(key)
+  const forward = html.match(
+    new RegExp(
+      `<meta[^>]*${attr}=["']${escapedKey}["'][^>]*content=["']([^"']+)["'][^>]*>`,
+      'i',
+    ),
+  )
+  if (forward?.[1]) {
+    return forward[1]
+  }
+  const reverse = html.match(
+    new RegExp(
+      `<meta[^>]*content=["']([^"']+)["'][^>]*${attr}=["']${escapedKey}["'][^>]*>`,
+      'i',
+    ),
+  )
+  return reverse?.[1]
+}
+
+const matchFaviconHref = (html: string) => {
+  const forward = html.match(
+    new RegExp(
+      `<link[^>]*rel=["'][^"']*icon[^"']*["'][^>]*href=["']([^"']+)["'][^>]*>`,
+      'i',
+    ),
+  )
+  if (forward?.[1]) {
+    return forward[1]
+  }
+  const reverse = html.match(
+    new RegExp(
+      `<link[^>]*href=["']([^"']+)["'][^>]*rel=["'][^"']*icon[^"']*["'][^>]*>`,
+      'i',
+    ),
+  )
+  return reverse?.[1]
+}
 
 export async function xExcerpt(tweetId) {
   const result = await req.get(
@@ -67,29 +113,21 @@ export const getTweetId = url => {
 export default function excerptFromHtml(html, url) {
   // console.log('html >>\n', html)
   const title =
-    html.match(new RegExp(`property="og:title" content="([^"]+)"`)) ??
-    html.match(new RegExp(`<title>(.+)</title>`))
-  const description = html.match(
-    new RegExp(`property="og:description" content="([^"]+)"`),
-  )
-  const image = html.match(new RegExp(`property="og:image" content="([^"]+)"`))
-  const _favicon = html.match(
-    new RegExp(
-      `<link rel="shortcut icon" (?:type="image/x-icon" )?href="([^"]+)"`,
-    ),
-  )
-  const favicon = _favicon ? _favicon[1] : '/favicon.ico'
-  const urlObj = parseUrl(url)
+    matchMetaContent(html, 'og:title') ??
+    html.match(new RegExp(`<title[^>]*>([^<]+)</title>`, 'i'))
+  const description =
+    matchMetaContent(html, 'og:description') ??
+    matchMetaContent(html, 'description', 'name')
+  const image = matchMetaContent(html, 'og:image')
+  const faviconHref = matchFaviconHref(html) ?? '/favicon.ico'
+  const favicon = resolveUrl(faviconHref, url)
+  const imageUrl = image ? resolveUrl(image, url) : favicon
 
   const excerpt = {
-    title: title ? title[1] : 'not found',
-    description: description ? description[1] : 'not found',
-    image: image ? image[1] : 'not found',
-    favicon:
-      oneOf([
-        [favicon.startsWith('http'), favicon],
-        [favicon.startsWith('//'), urlObj?.protocol + favicon],
-      ]) ?? urlObj?.protocol + '//' + urlObj?.host + favicon,
+    title: Array.isArray(title) ? title[1] : title ?? 'not found',
+    description: description ?? 'not found',
+    image: imageUrl || 'not found',
+    favicon: favicon || 'not found',
   }
   return excerpt
 }
@@ -258,17 +296,27 @@ const decodeJsonString = (value: string) => {
 }
 
 const resolveUrl = (href: string, baseUrl: string) => {
-  if (href.startsWith('http')) {
+  if (!href) {
     return href
   }
-  const parsed = parseUrl(baseUrl)
-  if (href.startsWith('//')) {
-    return (parsed.protocol ?? 'https:') + href
+  if (href.startsWith('data:')) {
+    return href
   }
-  if (href.startsWith('/')) {
-    return (parsed.protocol ?? 'https:') + '//' + parsed.host + href
+  try {
+    return new URL(href, baseUrl).toString()
+  } catch {
+    const parsed = parseUrl(baseUrl)
+    if (href.startsWith('http')) {
+      return href
+    }
+    if (href.startsWith('//')) {
+      return (parsed.protocol ?? 'https:') + href
+    }
+    if (href.startsWith('/')) {
+      return (parsed.protocol ?? 'https:') + '//' + parsed.host + href
+    }
+    return href
   }
-  return href
 }
 
 export function assert(
