@@ -111,7 +111,6 @@ export const getTweetId = url => {
   */
 
 export default function excerptFromHtml(html, url) {
-  // console.log('html >>\n', html)
   const title =
     matchMetaContent(html, 'og:title') ??
     html.match(new RegExp(`<title[^>]*>([^<]+)</title>`, 'i'))
@@ -124,7 +123,7 @@ export default function excerptFromHtml(html, url) {
   const imageUrl = image ? resolveUrl(image, url) : favicon
 
   const excerpt = {
-    title: Array.isArray(title) ? title[1] : title ?? 'not found',
+    title: Array.isArray(title) ? title[1] : (title ?? 'not found'),
     description: description ?? 'not found',
     image: imageUrl || 'not found',
     favicon: favicon || 'not found',
