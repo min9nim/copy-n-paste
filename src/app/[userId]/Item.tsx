@@ -79,7 +79,7 @@ export default function Item({ item, pre, setList }) {
           <div className="flex flex-col gap-1">
             <div className="flex flex-row gap-1 items-center">
               <div style={{ minWidth: 20 }}>
-                <img src={item.favicon} width={20} alt={item.title} />
+                <img src={item.favicon} width={20} alt="image" />
               </div>
               <a
                 href={item.url}
