@@ -205,7 +205,20 @@ export const getExcerpt = async (url: string) => {
   } else if (isYouTubeUrl(url)) {
     excerpt = await youtubeOEmbed(url)
   } else {
-    const result = await fetch(url)
+    const result = await fetch(url, {
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1',
+        Accept:
+          'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Language': 'ko-KR,ko;q=0.9,en;q=0.8',
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        // Referer: 'https://www.coupang.com/',
+        Connection: 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+      },
+    })
     if (!result.ok) {
       throw Error(`[${result.status}] result.ok is falsy`)
     }
